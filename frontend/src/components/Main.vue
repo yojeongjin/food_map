@@ -2,7 +2,6 @@
   <div class="main">
     <div class="inner">
       <Search />
-      <!-- <img src="../assets/도토리.png" alt=""> -->
     </div>
   </div>
 </template>

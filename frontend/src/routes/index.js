@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from './Home'
+import Find from './Find'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -7,6 +8,10 @@ export default createRouter({
     {
       path: '/',
       component: Home
+    },
+    {
+      path: '/find',
+      component: Find
     }
   ]
 })

@@ -111,6 +111,6 @@ export default {
       right: -50px;
       width: 50px;
       height: 30px;
-      }
+    }
   }
 </style>

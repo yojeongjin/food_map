@@ -9,8 +9,12 @@
       <div v-for="filter in filters" :key="filter.name" class="selects"> 검색결과
         <div v-for="item in filter.item" :key="item" class="select">{{ item }}</div>
       </div>
-      <div class="location">장소</div>
-      <div class="information"></div>
+      <div class="location" @click="results">장소</div>
+      <div class="information">
+        <div class="place" v-for="result in results" :key="result.id">
+          {{ result.place_name }}
+        </div>
+      </div>
     </div>
     <button class="close-btn" @click="showSide">
       {{ isShow ? 'X' : '>' }}
@@ -29,8 +33,12 @@
             name:"type",
             item: ["한식", "중식", "일식", "양식", "카페&디저트"]
           }
-        ]
+        ],
+        results: []
       }
+    },
+    mounted() {
+      this.emitter.on('results', this.pushData)
     },
     methods: {
       showSide() {
@@ -39,6 +47,12 @@
       apply() {
         this.emitter.emit('keyWord', this.keyword)
         this.keyword = '';
+        console.log(this.results)
+      },
+      pushData(data) {
+        for (let i=0; i<data.length; i++) {
+          this.results.push(data[i]) 
+        }
       }
     }
   }

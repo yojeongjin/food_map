@@ -13,7 +13,7 @@
         infowindow: null,
         latitude: 0,
         longitude: 0,
-        serach : {
+        search : {
           keyword: null,
           pgn: null,
           results: []
@@ -80,12 +80,14 @@
         }
       },
       searchPlaces(keyword) {
+
         let ps = new kakao.maps.services.Places();
         ps.keywordSearch(keyword, (data, status, pgn) => {
-
-          console.log(data)
-          console.log(status)
-          console.log(pgn)
+          this.search.keyword = keyword;
+          this.search.pgn = pgn;
+   
+          this.emitter.emit('results', data)
+          this.data = []
         })
       }
     }

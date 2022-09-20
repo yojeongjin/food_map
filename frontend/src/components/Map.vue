@@ -13,11 +13,6 @@
         infowindow: null,
         latitude: 0,
         longitude: 0,
-        search : {
-          keyword: null,
-          pgn: null,
-          results: []
-        }
       };
     },
     mounted() {
@@ -38,7 +33,6 @@
           }
         })
       }
-      this.emitter.on('keyWord', this.searchPlaces)
     },
     methods: {
       initMap() {
@@ -50,7 +44,6 @@
         this.map = new kakao.maps.Map(container, options); // 지도 생성
         let markerPositions = [[this.latitude, this.longitude]]
         this.displayMarker(markerPositions); //마커 생성 
-        this.searchPlaces()
       },
 
       displayMarker(markerPositions) {
@@ -79,17 +72,17 @@
           this.map.setBounds(bounds);
         }
       },
-      searchPlaces(keyword) {
-
-        let ps = new kakao.maps.services.Places();
-        ps.keywordSearch(keyword, (data, status, pgn) => {
-          this.search.keyword = keyword;
-          this.search.pgn = pgn;
-   
-          this.emitter.emit('results', data)
-          this.data = []
-        })
-      }
+      // searchPlaces() {
+      //   let ps = new kakao.maps.services.Places();
+      //   ps.keywordSearch(keyword, (data, status, pgn) => {
+      //     this.search.keyword = keyword;
+      //     this.search.pgn = pgn;
+          
+      //     this.emitter.emit('results', data)
+      //     this.data = []
+      //     console.log(data)
+      //   })
+      // }
     }
   }
 

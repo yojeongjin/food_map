@@ -11,8 +11,7 @@
       </div>
       <div class="location" @click="results">장소</div>
       <div class="information">
-        <div class="place" v-for="result in results" :key="result.id">
-          {{ result.place_name }}
+        <div class="place">
         </div>
       </div>
     </div>
@@ -34,25 +33,14 @@
             item: ["한식", "중식", "일식", "양식", "카페&디저트"]
           }
         ],
-        results: []
       }
-    },
-    mounted() {
-      this.emitter.on('results', this.pushData)
     },
     methods: {
       showSide() {
         this.isShow = !this.isShow;
       },
       apply() {
-        this.emitter.emit('keyWord', this.keyword)
-        this.keyword = '';
-        console.log(this.results)
-      },
-      pushData(data) {
-        for (let i=0; i<data.length; i++) {
-          this.results.push(data[i]) 
-        }
+        this.$store.dispatch('place/searchPlaces', {keyword: this.keyword})
       }
     }
   }

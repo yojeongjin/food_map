@@ -11,7 +11,10 @@
       </div>
       <div class="location" @click="results">장소</div>
       <div class="information">
-        <div class="place">
+        <div class="msg">{{ message }}</div>
+        <div v-for="data in datas" :key="data.id" class="place">
+          <div class="name">{{ data.place_name }}</div>
+          <div class="address">{{ data.address_name }}</div>
         </div>
       </div>
     </div>
@@ -42,7 +45,15 @@
       apply() {
         this.$store.dispatch('place/searchPlaces', {keyword: this.keyword})
       }
-    }
+    },
+    computed: {
+      datas() {
+        return this.$store.state.place.datas
+      },
+      message() {
+        return this.$store.state.place.msg
+      }
+    },
   }
 </script>
 
@@ -113,15 +124,39 @@
         width: 90%;
         font-size: 20px;
         padding: 10px;
-        border-bottom: 1px solid #c8c8c8;
+        border-bottom: 1px solid #333;
       }
       .information {
         position: absolute;
-        top: 230px;
+        top: 220px;
         width: 95%;
-        height: 100%;
-        border: 1px solid #333;
-        box-sizing: border-box;
+        height: 70%;
+        // border: 1px solid #333;
+        box-sizing: border-box; 
+        overflow: hidden;
+        overflow-y: auto;
+        :hover {
+            background-color: aliceblue;
+          }
+        .msg{
+          position: absolute;
+          top: 100px;
+          left: 100px;
+          font-size: 20px;
+        }
+        .place {
+          // border: 1px solid #333;
+          padding: 15px;
+          text-align: center;
+          line-height: 1.7;
+          border-bottom: 1px solid #c8c8c8;
+          box-sizing: border-box;
+          cursor: pointer;
+          .name {
+            font-weight: 500;
+            font-size: 18px;
+          }
+        }
       }
     }
     .close-btn{

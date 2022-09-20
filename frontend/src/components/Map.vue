@@ -45,7 +45,6 @@
         let markerPositions = [[this.latitude, this.longitude]]
         this.displayMarker(markerPositions); //마커 생성 
       },
-
       displayMarker(markerPositions) {
         if (this.markers.length > 0) {
           this.markers.forEach((marker) => marker.setMap(null));
@@ -60,7 +59,7 @@
             (position) =>
               new kakao.maps.Marker({
                 map: this.map,
-                position,
+                position
               })
           );
 
@@ -71,18 +70,7 @@
 
           this.map.setBounds(bounds);
         }
-      },
-      // searchPlaces() {
-      //   let ps = new kakao.maps.services.Places();
-      //   ps.keywordSearch(keyword, (data, status, pgn) => {
-      //     this.search.keyword = keyword;
-      //     this.search.pgn = pgn;
-          
-      //     this.emitter.emit('results', data)
-      //     this.data = []
-      //     console.log(data)
-      //   })
-      // }
+      }
     }
   }
 

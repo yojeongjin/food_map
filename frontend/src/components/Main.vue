@@ -7,10 +7,10 @@
 </template>
 
 <script>
-import Search from './Search.vue';
-export default {
-    components: { Search }
-}
+  import Search from './Search.vue';
+  export default {
+      components: { Search }
+  }
 </script>
 
 <style lang="scss" scoped>

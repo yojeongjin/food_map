@@ -17,25 +17,25 @@
 
 // import Logo from './Logo.vue';
 export default {
-    data() {
-        return {
-            navigations: [
-                {
-                    name: "맛집 가이드",
-                    href: "/"
-                },
-                {
-                    name: "지역별 대표음식",
-                    href: "/"
-                },
-                {
-                    name: "오늘 뭐먹지?",
-                    href: "/"
-                }
-            ]
-        };
-    },
-    // components: { Logo }
+  data() {
+    return {
+      navigations: [
+        {
+            name: "맛집 가이드",
+            href: "/"
+        },
+        {
+            name: "지역별 대표음식",
+            href: "/"
+        },
+        {
+            name: "오늘 뭐먹지?",
+            href: "/"
+        }
+      ]
+    };
+  },
+  // components: { Logo }
 }
 </script>
 

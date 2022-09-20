@@ -26,35 +26,35 @@
 
 <script>
 
-export default { 
-  data() {
-    return {
-      menus: [
-        {
-          name:"가솔린앤로지스",
-          location: "부산시 부산진구 동성로",
-          href: "/",
-          photo: "newly1.jpg",
-          description : "장인의 츠케멘을 느끼고싶다면 이곳으로!"
-        },
-        {
-          name:"레스토랑 덱스터",
-          location: "서울특별시 강남구 청담동 삼성로",
-          href: "/",
-          photo: "newly2.jpg",
-          description : "버섯 퓨레가 곁들어진 스테이크가 일품!"
-        },
-        {
-          name:"하딩바",
-          location: "서울특별시 용산구 신흥로",
-          href: "/",
-          photo: "newly3.jpg",
-          description : "덕수궁 석조전을 건축한 '하딩'의 기백을 느낄 수 있는 원테이블 bar"
-        }
-      ]
+  export default { 
+    data() {
+      return {
+        menus: [
+          {
+            name:"가솔린앤로지스",
+            location: "부산시 부산진구 동성로",
+            href: "/",
+            photo: "newly1.jpg",
+            description : "장인의 츠케멘을 느끼고싶다면 이곳으로!"
+          },
+          {
+            name:"레스토랑 덱스터",
+            location: "서울특별시 강남구 청담동 삼성로",
+            href: "/",
+            photo: "newly2.jpg",
+            description : "버섯 퓨레가 곁들어진 스테이크가 일품!"
+          },
+          {
+            name:"하딩바",
+            location: "서울특별시 용산구 신흥로",
+            href: "/",
+            photo: "newly3.jpg",
+            description : "덕수궁 석조전을 건축한 '하딩'의 기백을 느낄 수 있는 원테이블 bar"
+          }
+        ]
+      }
     }
   }
-}
 </script>
 
 

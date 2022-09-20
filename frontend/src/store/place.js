@@ -3,7 +3,8 @@ export default {
   namespaced: true,
   state: () => ({
     datas: [],
-    msg: ''
+    msg: '',
+    markersPositions: []
   }),
   getters: {},
   mutations: {
@@ -17,12 +18,19 @@ export default {
     searchPlaces({ commit }, payload) {
       const { keyword }  = payload
       /* global kakao */
-      let ps = new kakao.maps.services.Places();
+      let ps = new kakao.maps.services.Places()
       ps.keywordSearch(keyword, (data,status) => {
         if(status === kakao.maps.services.Status.OK) {
+          let markersPosition = []
+          for (let i=0; i<data.length; i++) {
+            let lat = data[i].y
+            let lng = data[i].x
+            markersPosition.push([lat, lng])
+          }
           commit('updateState', {
             datas: data,
-            msg: ''
+            msg: '',
+            markersPositions: markersPosition
           })
         } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
           commit('updateState', {
@@ -36,7 +44,7 @@ export default {
           })
         }
       })
-    },
-    
+
+    }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="search">
     <img src="../assets/pin.png" alt="핀" />
-    <RouterLink to="/" class="search-map">지도에서 맛집찾기</RouterLink>
+    <RouterLink to="/find" class="search-map">지도에서 맛집찾기</RouterLink>
   </div>
 </template>
 

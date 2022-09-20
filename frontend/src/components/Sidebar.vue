@@ -9,7 +9,7 @@
       <div v-for="filter in filters" :key="filter.name" class="selects"> 검색결과
         <div v-for="item in filter.item" :key="item" class="select">{{ item }}</div>
       </div>
-      <div class="location" @click="results">장소</div>
+      <div class="location">장소</div>
       <div class="information">
         <div class="msg">{{ message }}</div>
         <div v-for="data in datas" :key="data.id" class="place">
@@ -30,6 +30,7 @@
       return {
         isShow: true,
         keyword: "",
+        text: "",
         filters: [
           {
             name:"type",

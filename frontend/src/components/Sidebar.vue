@@ -2,12 +2,12 @@
   <div class="side-container">
     <div v-if="isShow" class="side-bar">
       <div class="input-area">
-        <input v-model="keyword" type="text" @keyup.enter="apply" placeholder="어디로 가시나요? (시,도명으로 검색해주세요.)" />
+        <input v-model="keyword" type="text" @keyup.enter="apply" placeholder="어디로 가시나요?" />
         <img src="../assets/search.png" alt="검색" @click="apply" class="input-img"/>
       </div>
       <div class="my-save">내가 찜한 맛집</div>
-      <div v-for="filter in filters" :key="filter.name" class="selects"> 검색결과
-        <div v-for="item in filter.item" :key="item" class="select">{{ item }}</div>
+      <div class="selects">검색결과
+        <div @click="filterSelect" v-for="filter in filters" :key="filter.id" id="filter.id" class="select"> {{ filter.type }}</div>
       </div>
       <div class="location">장소</div>
       <div class="information">
@@ -15,7 +15,7 @@
         <ul v-for="data in datas" :key="data.id" class="place" @click="clickInfo">
           <div>
             <li class="name">{{ data.place_name }}</li>
-            <li class="address" @click="clickAdr">{{ data.address_name }}</li>
+            <li class="address">{{ data.address_name }}</li>
           </div>
         </ul>
       </div>
@@ -32,11 +32,26 @@
       return {
         isShow: true,
         keyword: "",
-        list: [],
         filters: [
           {
-            name:"type",
-            item: ["한식", "중식", "일식", "양식", "카페&디저트"]
+            type: '한식',
+            id: 1
+          },
+          {
+            type: '중식',
+            id: 2
+          },
+          {
+            type: '일식',
+            id: 3
+          },
+          {
+            type: '양식',
+            id: 4
+          },
+          {
+            type: '카페',
+            id: 5
           }
         ],
       }
@@ -46,7 +61,7 @@
         this.isShow = !this.isShow;
       },
       apply() {
-        this.$store.dispatch('place/searchPlaces', {keyword: this.keyword})
+        this.$store.dispatch('place/searchPlaces', {keyword: this.keyword + '맛집'})
       },
       clickInfo() {
         const placeInfo = document.querySelectorAll('ul > div')
@@ -56,7 +71,12 @@
             this.emitter.emit('info', index)
           }
         })
+      },
+      filterSelect(e) {
+        let type = e.target.outerText
+        this.$store.dispatch('place/searchPlaces', {keyword: this.keyword + '맛집' + `'${type}'`})
       }
+
     },
     computed: {
       datas() {
@@ -116,9 +136,9 @@
       .selects {
         position: absolute;
         display: flex;
+        width: 100%;
         top: 130px;
         font-size: 17px;
-        color: rgb(35, 34, 34);
         text-align: center;
         display: flex;
         justify-content: center;

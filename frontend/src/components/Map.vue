@@ -12,7 +12,6 @@
         latitude: 0,
         longitude: 0,
         markers: [],
-        contents: [],
         infowindow: null
       }
     },
@@ -49,11 +48,13 @@
         const container = document.getElementById("map");
         const options = {
           center: new kakao.maps.LatLng(this.latitude, this.longitude), // 지도 중심
-          level: 4,
+          level: 3,
         };
         this.map = new kakao.maps.Map(container, options); // 지도 생성
-        this.markerPosition = [[this.latitude, this.longitude]]
-        this.displayMarker(this.markerPosition)
+        this.marker = new kakao.maps.Marker({
+          map: this.map,
+          position: options.center
+        })
       },
       displayMarker(markersPositions) {
         if (this.markers.length > 0) {

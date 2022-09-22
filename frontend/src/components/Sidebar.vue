@@ -12,10 +12,12 @@
       <div class="location">장소</div>
       <div class="information">
         <div class="msg">{{ message }}</div>
-        <div v-for="data in datas" :key="data.id" class="place">
-          <div class="name">{{ data.place_name }}</div>
-          <div class="address">{{ data.address_name }}</div>
-        </div>
+        <ul v-for="data in datas" :key="data.id" class="place" @click="clickInfo">
+          <div>
+            <li class="name">{{ data.place_name }}</li>
+            <li class="address" @click="clickAdr">{{ data.address_name }}</li>
+          </div>
+        </ul>
       </div>
     </div>
     <button class="close-btn" @click="showSide">
@@ -30,7 +32,7 @@
       return {
         isShow: true,
         keyword: "",
-        text: "",
+        list: [],
         filters: [
           {
             name:"type",
@@ -45,6 +47,15 @@
       },
       apply() {
         this.$store.dispatch('place/searchPlaces', {keyword: this.keyword})
+      },
+      clickInfo() {
+        const placeInfo = document.querySelectorAll('ul > div')
+
+        placeInfo.forEach((li,index) => {
+          li.onclick = () => {
+            this.emitter.emit('info', index)
+          }
+        })
       }
     },
     computed: {
@@ -132,7 +143,6 @@
         top: 220px;
         width: 95%;
         height: 70%;
-        // border: 1px solid #333;
         box-sizing: border-box; 
         overflow: hidden;
         overflow-y: auto;
@@ -146,16 +156,18 @@
           font-size: 20px;
         }
         .place {
-          // border: 1px solid #333;
           padding: 15px;
-          text-align: center;
+          // text-align: center;
           line-height: 1.7;
           border-bottom: 1px solid #c8c8c8;
           box-sizing: border-box;
           cursor: pointer;
-          .name {
+          div{
+            margin-left: 100px;
+            .name {
             font-weight: 500;
             font-size: 18px;
+          }
           }
         }
       }

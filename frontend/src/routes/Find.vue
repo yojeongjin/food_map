@@ -8,8 +8,9 @@
 <script>
 import Map from '@/components/Map.vue';
 import Sidebar from '@/components/Sidebar.vue';
+
 export default {
-    components: { Map, Sidebar }
+  components: { Map, Sidebar }
 }
 </script>
 

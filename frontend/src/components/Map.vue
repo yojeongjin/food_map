@@ -4,19 +4,24 @@
 </template>
 
 <script>
-  
+
   export default {
     data() {
       return {
         map: null,
         latitude: 0,
         longitude: 0,
-        markers: []
+        markers: [],
+        contents: [],
+        infowindow: null
       }
     },
     computed: {
       markersPositions() {
         return this.$store.state.place.markersPositions
+      },
+      datas() {
+        return this.$store.state.place.datas
       },
     },
     mounted() {
@@ -37,46 +42,87 @@
           }
         })
       }
+      this.emitter.on('info', this.onReceive)
     },
     methods: {
       initMap() {
         const container = document.getElementById("map");
         const options = {
           center: new kakao.maps.LatLng(this.latitude, this.longitude), // 지도 중심
-          level: 5,
+          level: 4,
         };
         this.map = new kakao.maps.Map(container, options); // 지도 생성
         this.markerPosition = [[this.latitude, this.longitude]]
         this.displayMarker(this.markerPosition)
-
       },
-
-      displayMarker(markerPositions) {
+      displayMarker(markersPositions) {
         if (this.markers.length > 0) {
-          this.markers.forEach((marker) => marker.setMap(null));
+          this.markers.forEach((marker) => marker.setMap(null))
+          this.markers = []
         }
+        for(let i=0; i<this.datas.length; i++) {
+          let position = new kakao.maps.LatLng(this.datas[i].y, this.datas[i].x)
+          let marker = this.addMarker(position, i)
 
-        const positions = markerPositions.map(
+          let customOverlay = new kakao.maps.CustomOverlay({
+          position,
+          xAnchor: 0.5,
+          yAnchor: 1.05,
+          })
+
+          let content = `<div class="info-content">${this.datas[i].place_name}</div>`
+          customOverlay.setContent(content)
+
+          kakao.maps.event.addListener(marker, 'click', () => {
+            customOverlay.setMap(this.map)
+          })
+        }
+        
+        const positions = markersPositions.map(
           (position) => new kakao.maps.LatLng(...position)
         );
-        
-        if (positions.length > 0) {
-          this.markers = positions.map(
-            (position) =>
-              new kakao.maps.Marker({
-                map: this.map,
-                position
-              })
-          );
 
-          const bounds = positions.reduce(
-            (bounds, latlng) => bounds.extend(latlng),
-            new kakao.maps.LatLngBounds()
-          );
+        const bounds = positions.reduce(
+          (bounds, latlng) => bounds.extend(latlng),
+          new kakao.maps.LatLngBounds()
+        );
+        this.map.setBounds(bounds)
+      },
+      addMarker (position, idx) {
+        var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', 
+        imageSize = new kakao.maps.Size(36, 37), 
+        imgOptions =  {
+            spriteSize : new kakao.maps.Size(36, 691), 
+            spriteOrigin : new kakao.maps.Point(0, (idx*46)+10),
+            offset: new kakao.maps.Point(13, 37)
+        },
+        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+            marker = new kakao.maps.Marker({
+            position: position,
+            image: markerImage 
+        });
 
-          this.map.setBounds(bounds);
-        }
-      }
+        marker.setMap(this.map)
+        this.markers.push(marker)
+
+        return marker
+      },
+      onReceive(i) {
+        let position = new kakao.maps.LatLng(this.datas[i].y, this.datas[i].x)
+
+        let customOverlay = new kakao.maps.CustomOverlay({
+          position,
+          xAnchor: 0.5,
+          yAnchor: 1.05,
+        });
+
+        let content = `<div class="info-content">${this.datas[i].place_name}</div>`
+        customOverlay.setContent(content)
+        customOverlay.setMap(this.map)
+
+        let bounds = new kakao.maps.LatLngBounds()
+        bounds.extend(position)
+      },
     },
     watch: {
       markersPositions() {
@@ -87,9 +133,15 @@
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   #map {
     width: 100%;
     height: 100vh;
+    .info-content {
+      border: 1px solid black;
+      box-sizing: border-box;
+      border-radius: 15px;
+      padding: 10px 10px;
+    }
   }
 </style>

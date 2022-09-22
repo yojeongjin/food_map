@@ -4,7 +4,7 @@ export default {
   state: () => ({
     datas: [],
     msg: '',
-    markersPositions: []
+    markersPositions: [],
   }),
   getters: {},
   mutations: {
@@ -44,7 +44,6 @@ export default {
           })
         }
       })
-
-    }
+    },
   }
 }

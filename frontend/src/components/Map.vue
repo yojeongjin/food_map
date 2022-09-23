@@ -48,7 +48,7 @@
         const container = document.getElementById("map");
         const options = {
           center: new kakao.maps.LatLng(this.latitude, this.longitude), // 지도 중심
-          level: 3,
+          level: 6,
         };
         this.map = new kakao.maps.Map(container, options); // 지도 생성
         this.marker = new kakao.maps.Marker({
@@ -110,6 +110,8 @@
       },
       onReceive(i) {
         let position = new kakao.maps.LatLng(this.datas[i].y, this.datas[i].x)
+
+        console.log(i)
 
         let customOverlay = new kakao.maps.CustomOverlay({
           position,

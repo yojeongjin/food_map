@@ -7,15 +7,22 @@
       </div>
       <div class="my-save">내가 찜한 맛집</div>
       <div class="selects">검색결과
-        <div @click="filterSelect" v-for="filter in filters" :key="filter.id" id="filter.id" class="select"> {{ filter.type }}</div>
+        <div @click="filterSelect" v-for="filter in newFilters" :key="filter.id" class="select"> {{ filter.name }}</div>
       </div>
       <div class="location">장소</div>
-      <div class="information">
-        <div class="msg">{{ message }}</div>
-        <ul v-for="data in datas" :key="data.id" class="place" @click="clickInfo">
-          <div>
-            <li class="name">{{ data.place_name }}</li>
-            <li class="address">{{ data.address_name }}</li>
+      <div class="information" @click="clickInfo">
+        <div class="info-msg">{{ message }}</div>
+        <ul v-for="data in datas" :key="data.id" class="info-place">
+          <div class="place-info">
+            <li class="info-name">{{ data.place_name }}</li>
+            <li class="info-address">{{ data.address_name }}</li>
+            <li class="info-phone">☏ {{ data.phone }}</li>
+          </div>
+          <div class="info-save">
+            <div class="info-btns" @click="saveInfo">
+              <img src="../assets/blank-star.png" alt="저장안함" class="front"/>
+              <img src="../assets/star.png" alt="저장" class="back" />
+            </div>
           </div>
         </ul>
       </div>
@@ -31,32 +38,27 @@
     data() {
       return {
         isShow: true,
+        saveIndex: Number(''),
         keyword: "",
-        filters: [
-          {
-            type: '한식',
-            id: 1
-          },
-          {
-            type: '중식',
-            id: 2
-          },
-          {
-            type: '일식',
-            id: 3
-          },
-          {
-            type: '양식',
-            id: 4
-          },
-          {
-            type: '카페',
-            id: 5
-          }
-        ],
+        filters: ['한식','중식','일식','양식','카페'],
+        indexArray: []
       }
     },
     methods: {
+      saveInfo() {
+        const infoBtns = document.querySelectorAll('.info-btns > .front')
+        const front = document.querySelectorAll('.front')
+        const back = document.querySelectorAll('.back')
+
+        infoBtns.forEach((el, index) => {
+          el.onclick = () => {
+            this.saveIndex = index
+          }
+        })
+        front[this.saveIndex].style.transform = `rotateY(${180}deg)`
+        back[this.saveIndex].style.transform = `rotateY(${0}deg)`
+        
+      },
       showSide() {
         this.isShow = !this.isShow;
       },
@@ -64,11 +66,12 @@
         this.$store.dispatch('place/searchPlaces', {keyword: this.keyword + '맛집'})
       },
       clickInfo() {
-        const placeInfo = document.querySelectorAll('ul > div')
+        const placeInfo = document.querySelectorAll('ul > .place-info')
 
-        placeInfo.forEach((li,index) => {
-          li.onclick = () => {
+        placeInfo.forEach((div,index) => {
+          div.onclick = () => {
             this.emitter.emit('info', index)
+            
           }
         })
       },
@@ -84,7 +87,15 @@
       },
       message() {
         return this.$store.state.place.msg
-      }
+      },
+      newFilters() {
+        return this.filters.map((filter, index) => {
+          return {
+            id: index,
+            name: filter
+          }
+        })
+      },
     },
   }
 </script>
@@ -160,7 +171,7 @@
       }
       .information {
         position: absolute;
-        top: 220px;
+        top: 215px;
         width: 95%;
         height: 70%;
         box-sizing: border-box; 
@@ -169,25 +180,59 @@
         :hover {
             background-color: aliceblue;
           }
-        .msg{
+        .info-msg{
           position: absolute;
           top: 100px;
           left: 100px;
           font-size: 20px;
         }
-        .place {
-          padding: 15px;
-          // text-align: center;
-          line-height: 1.7;
+        .info-place {
+          position: relative;
+          padding: 50px;
+          line-height: 1.6;
           border-bottom: 1px solid #c8c8c8;
           box-sizing: border-box;
           cursor: pointer;
-          div{
-            margin-left: 100px;
-            .name {
+
+          .place-info {
+            position: absolute;
+            width: 75%;
+            height: 92%;
+            top: 2px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            .info-name {
             font-weight: 500;
             font-size: 18px;
+            }
+            .info-phone {
+              font-size: 14px;
+              color: rgb(22, 74, 22);
+            }
           }
+          .info-save {
+              position: relative;
+              top: -30px;
+              right: 10px;
+              display: flex;
+              justify-content: flex-end;
+              .info-btns {
+                position: absolute;
+
+                .front {
+                position: absolute;
+                backface-visibility: hidden;
+                transform: rotateY(0deg);
+               }
+                .back {
+                  backface-visibility: hidden;
+                  position: absolute;
+                  transform: rotateY(-180deg);
+                }
+
+              }
           }
         }
       }

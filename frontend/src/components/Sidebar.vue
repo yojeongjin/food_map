@@ -5,7 +5,8 @@
         <input v-model="keyword" type="text" @keyup.enter="apply" placeholder="어디로 가시나요?" />
         <img src="../assets/search.png" alt="검색" @click="apply" class="input-img"/>
       </div>
-      <div class="my-save">내가 찜한 맛집</div>
+      <div class="my-save" @click="getSaveDatas">내가 찜한 맛집
+      </div>
       <div class="selects">검색결과
         <div @click="filterSelect" v-for="filter in newFilters" :key="filter.id" class="select"> {{ filter.name }}</div>
       </div>
@@ -18,13 +19,20 @@
             <li class="info-address">{{ data.address_name }}</li>
             <li class="info-phone">☏ {{ data.phone }}</li>
           </div>
-          <form class="info-save" @click="getIndex">
-            <div class="info-btns">
+          <form class="info-save">
+            <div class="info-btns" @click="getIndex">
               <div class="front" @click="saveInfo"></div>
               <div class="back" @click="cancleInfo"></div>
             </div>
           </form>
         </ul>
+        <template v-if="isSave">
+          <ul v-for="saveData in saveDatas" :key="saveData.resIdx" class="saveData-info">
+            <li class="saveData-name">{{ saveData.resName }}</li>
+            <li class="saveData-add">{{ saveData.resAdd }}</li>
+            <a class="saveData-url" :href="saveData.resUrl">자세히 보기: {{ saveData.resUrl }}</a>
+          </ul>
+        </template>
       </div>
     </div>
     <button class="close-btn" @click="showSide">
@@ -58,6 +66,8 @@
       },
       apply() {
         this.$store.dispatch('place/searchPlaces', {keyword: this.keyword + '맛집'})
+        this.isSave = false
+        console.log(this.datas)
       },
       clickInfo() {
         const placeInfo = document.querySelectorAll('ul > .place-info')
@@ -71,6 +81,7 @@
       filterSelect(e) {
         let type = e.target.outerText
         this.$store.dispatch('place/searchPlaces', {keyword: this.keyword + '맛집' + `'${type}'`})
+        this.isSave = false
       },
       getIndex() {
         const infoBtn = document.querySelectorAll('form > .info-btns')
@@ -79,7 +90,8 @@
           div.onclick = () => {
             axios.post('http://localhost:3000/api/find', {
               resName : this.datas[index].place_name,
-              resAdd : this.datas[index].address_name
+              resAdd : this.datas[index].address_name,
+              resUrl: this.datas[index].place_url
             })
             .then((res) => {
               console.log(res,'완료')
@@ -90,6 +102,11 @@
           }
         })
       },
+      getSaveDatas() {
+        this.$store.dispatch('save/getSave')
+        this.$store.dispatch('place/searchPlaces', {keyword: ''})
+        this.isSave = true
+      }
     },
     computed: {
       datas() {
@@ -106,6 +123,9 @@
           }
         })
       },
+      saveDatas() {
+        return this.$store.state.save.saveData
+      }
     },
   }
 </script>
@@ -149,6 +169,7 @@
         height: 8%;
         position: absolute;
         top: 70px;
+        cursor: pointer;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -250,6 +271,28 @@
                 }
 
               }
+          }
+        }
+        .saveData-info {
+          position: relative;
+          padding: 20px;
+          line-height: 1.6;
+          border-bottom: 1px solid #c8c8c8;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          cursor: pointer;
+          .saveData-name {
+            font-weight: 500;
+            font-size: 18px;
+          }
+          .saveData-url {
+            margin-top: 2px;
+            padding: 5px;
+            font-size: 14px;
+            color:#333;
           }
         }
       }

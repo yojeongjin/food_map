@@ -43,6 +43,11 @@ export default {
             datas: [],
             msg: '검색 중 오류가 발생하였습니다.'
           })
+        } else {
+          commit('updateState', {
+            datas: [],
+            msg: '',
+          })
         }
       })
     },

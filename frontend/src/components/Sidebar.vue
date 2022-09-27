@@ -19,8 +19,8 @@
             <li class="info-address">{{ data.address_name }}</li>
             <li class="info-phone">☏ {{ data.phone }}</li>
           </div>
-          <form class="info-save">
-            <div class="info-btns" @click="getIndex">
+          <form class="info-save" @click="getIndex">
+            <div class="info-btns">
               <div class="front" @click="saveInfo"></div>
               <div class="back" @click="cancleInfo"></div>
             </div>
@@ -28,9 +28,12 @@
         </ul>
         <template v-if="isSave">
           <ul v-for="saveData in saveDatas" :key="saveData.resIdx" class="saveData-info">
-            <li class="saveData-name">{{ saveData.resName }}</li>
-            <li class="saveData-add">{{ saveData.resAdd }}</li>
+            <li class="saveData-name"> {{ saveData.resName }} </li>
+            <li class="saveData-add"> {{ saveData.resAdd }} </li>
             <a class="saveData-url" :href="saveData.resUrl">자세히 보기: {{ saveData.resUrl }}</a>
+            <form @click="removeSave">
+              <img src="../assets/bin.png" class="saveData-img" />
+            </form>
           </ul>
         </template>
       </div>
@@ -106,6 +109,21 @@
         this.$store.dispatch('save/getSave')
         this.$store.dispatch('place/searchPlaces', {keyword: ''})
         this.isSave = true
+      },
+      removeSave(e) {
+        const resIdx = Number(e.path[2].__vnode.key)
+        console.log(this.saveDatas)
+        axios.delete('http://localhost:3000/api/find', {params: {
+          resIdx: resIdx
+        }})
+        .then((res) => {
+          console.log(res,'삭제완료')
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+        var index = this.saveDatas.indexOf(resIdx)
+        this.saveDatas.splice(index, 1)
       }
     },
     computed: {
@@ -275,7 +293,8 @@
         }
         .saveData-info {
           position: relative;
-          padding: 20px;
+          width: 100%;
+          padding: 15px 20px;
           line-height: 1.6;
           border-bottom: 1px solid #c8c8c8;
           box-sizing: border-box;
@@ -293,6 +312,15 @@
             padding: 5px;
             font-size: 14px;
             color:#333;
+          }
+          .saveData-img {
+            position: absolute;
+            top: 10px;
+            right: 0px;
+            padding: 10px;
+            &:hover {
+              scale: 1.2;
+            }
           }
         }
       }

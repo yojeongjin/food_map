@@ -17,3 +17,14 @@ exports.add = (req,res) => {
 		res.send({success:true});
 	})
 }
+
+exports.delete = (req,res) => {
+	body = req.query;
+	console.log(req.query)
+	sql = "DELETE FROM Restraunts WHERE resIdx = ? ";
+	conn.query(sql,[body.resIdx],(err,result) => {
+		if(err) throw err;
+
+		res.send({success:true,result:result});
+	})
+}

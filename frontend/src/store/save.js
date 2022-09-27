@@ -4,7 +4,7 @@ import axios from "axios"
 export default {
   namespaced: true,
   state: () => ({
-    saveData: []
+    saveDatas: []
   }),
   getters: {},
   mutations: {
@@ -19,7 +19,7 @@ export default {
       const res = await axios.get('http://localhost:3000/api/find')
       const { data } = res.data
       commit('updateState', {
-        saveData: data
+        saveDatas: data
       })
     }
   }

@@ -1,43 +1,44 @@
 <template>
   <div class="side-container">
-    <div v-if="isShow" class="side-bar">
-      <div class="input-area">
-        <input v-model="keyword" type="text" @keyup.enter="apply" placeholder="어디로 가시나요?" />
-        <img src="../assets/search.png" alt="검색" @click="apply" class="input-img"/>
-      </div>
-      <div class="my-save" @click="getSaveDatas">내가 찜한 맛집
-      </div>
-      <div class="selects">검색결과
-        <div @click="filterSelect" v-for="filter in newFilters" :key="filter.id" class="select"> {{ filter.name }}</div>
-      </div>
-      <div class="location">장소</div>
-      <div class="information" @click="clickInfo">
-        <div class="info-msg">{{ message }}</div>
-        <ul v-for="data in datas" :key="data.id" class="info-place">
-          <div class="place-info">
-            <li class="info-name">{{ data.place_name }}</li>
-            <li class="info-address">{{ data.address_name }}</li>
-            <li class="info-phone">☏ {{ data.phone }}</li>
-          </div>
-          <form class="info-save" @click="getIndex">
-            <div class="info-btns">
-              <div class="front" @click="saveInfo"></div>
-              <div class="back" @click="cancleInfo"></div>
+    <template v-if="isShow">
+      <div class="side-bar">
+        <div class="side-input">
+          <input v-model="keyword" type="text" @keyup.enter="apply" placeholder="어디로 가시나요?" />
+          <img src="../assets/search.png" alt="검색" @click="apply" class="input-img"/>
+        </div>
+        <div class="place-save" @click="getSaveDatas">내가 찜한 맛집</div>
+        <div class="place-search">검색결과
+          <div @click="filterSelect" v-for="filter in newFilters" :key="filter.id" class="place-search__content"> {{ filter.name }}</div>
+        </div>
+        <div class="place__title">장소</div>
+        <div class="place-information">
+          <div class="info-msg">{{ message }}</div>
+          <ul v-for="data in datas" :key="data.id" class="info-place">
+            <div :data-code="data.id" class="info-place__elements" @click="clickOverlay">
+              <li :data-code="data.id" class="info-name">{{ data.place_name }}</li>
+              <li :data-code="data.id" class="info-address">{{ data.address_name }}</li>
+              <li :data-code="data.id" class="info-phone">☏ {{ data.phone }}</li>
             </div>
-          </form>
-        </ul>
-        <template v-if="isSave">
-          <ul v-for="saveData in saveDatas" :key="saveData.resIdx" class="saveData-info">
-            <li class="saveData-name"> {{ saveData.resName }} </li>
-            <li class="saveData-add"> {{ saveData.resAdd }} </li>
-            <a class="saveData-url" :href="saveData.resUrl">자세히 보기: {{ saveData.resUrl }}</a>
-            <form @click="removeSave">
-              <img src="../assets/bin.png" class="saveData-img" />
+            <form class="info-save" @click="clickPlaceSave">
+              <div class="info-btns">
+                <div :data-code="data.id" class="front" @click="saveInfo"></div>
+                <div :data-code="data.id" class="back" @click="cancleInfo"></div>
+              </div>
             </form>
           </ul>
-        </template>
+          <template v-if="isSave">
+            <ul v-for="saveData in saveDatas" :key="saveData.id" class="saveData-info">
+              <li class="saveData-name"> {{ saveData.resName }} </li>
+              <li class="saveData-add"> {{ saveData.resAdd }} </li>
+              <a class="saveData-url" :href="saveData.resUrl">자세히 보기: {{ saveData.resUrl }}</a>
+              <form @click="removeSave">
+                <img :data-code="saveData.id" src="../assets/bin.png" class="saveData-img" />
+              </form>
+            </ul>
+          </template>
+        </div>
       </div>
-    </div>
+    </template>
     <button class="close-btn" @click="showSide">
       {{ isShow ? 'X' : '>' }}
     </button>
@@ -70,39 +71,29 @@
       apply() {
         this.$store.dispatch('place/searchPlaces', {keyword: this.keyword + '맛집'})
         this.isSave = false
-        console.log(this.datas)
       },
-      clickInfo() {
-        const placeInfo = document.querySelectorAll('ul > .place-info')
-
-        placeInfo.forEach((div,index) => {
-          div.onclick = () => {
-            this.emitter.emit('info', index)
-          }
-        })
+      clickOverlay(e) {
+        let index = e.target.dataset.code
+        this.emitter.emit('info', index)
       },
       filterSelect(e) {
         let type = e.target.outerText
         this.$store.dispatch('place/searchPlaces', {keyword: this.keyword + '맛집' + `'${type}'`})
         this.isSave = false
       },
-      getIndex() {
-        const infoBtn = document.querySelectorAll('form > .info-btns')
+      clickPlaceSave(e) {
+        let index = e.target.dataset.code
 
-        infoBtn.forEach((div,index) => {
-          div.onclick = () => {
-            axios.post('http://localhost:3000/api/find', {
-              resName : this.datas[index].place_name,
-              resAdd : this.datas[index].address_name,
-              resUrl: this.datas[index].place_url
-            })
-            .then((res) => {
-              console.log(res,'완료')
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-          }
+        axios.post('http://localhost:3000/api/find', {
+          resName : this.datas[index].place_name,
+          resAdd : this.datas[index].address_name,
+          resUrl: this.datas[index].place_url
+        })
+        .then((res) => {
+          console.log(res,'완료')
+        })
+        .catch((err) => {
+          console.log(err)
         })
       },
       getSaveDatas() {
@@ -111,10 +102,10 @@
         this.isSave = true
       },
       removeSave(e) {
-        const resIdx = Number(e.path[2].__vnode.key)
-        console.log(this.saveDatas)
+        let index = e.target.dataset.code
+
         axios.delete('http://localhost:3000/api/find', {params: {
-          resIdx: resIdx
+          resIdx: this.saveDatas[index].resIdx
         }})
         .then((res) => {
           console.log(res,'삭제완료')
@@ -122,13 +113,19 @@
         .catch((err) => {
           console.log(err)
         })
-        var index = this.saveDatas.indexOf(resIdx)
-        this.saveDatas.splice(index, 1)
       }
     },
     computed: {
       datas() {
-        return this.$store.state.place.datas
+        return this.$store.state.place.datas.map((data, index) => {
+          return {
+            id: index,
+            address_name: data.address_name,
+            phone: data.phone,
+            place_name: data.place_name,
+            place_url: data.place_url            
+          }
+        })
       },
       message() {
         return this.$store.state.place.msg
@@ -142,7 +139,15 @@
         })
       },
       saveDatas() {
-        return this.$store.state.save.saveData
+        return this.$store.state.save.saveDatas.map((saveData, index) => {
+          return {
+            id: index,
+            resIdx: saveData.resIdx,
+            resName: saveData.resName,
+            resAdd: saveData.resAdd,
+            resUrl: saveData.resUrl
+          }
+        })
       }
     },
   }
@@ -158,7 +163,7 @@
       height: 100%;
       display: flex;
       justify-content: center;
-      .input-area{
+      .side-input{
         margin-top: 20px;
         width: 80%;
         height: 6%;
@@ -182,7 +187,7 @@
           padding: 10px 10px;
         }
       }
-      .my-save {
+      .place-save {
         width: 100%;
         height: 8%;
         position: absolute;
@@ -193,7 +198,7 @@
         align-items: center;
         color: #333;
       }
-      .selects {
+      .place-search {
         position: absolute;
         display: flex;
         width: 100%;
@@ -204,13 +209,13 @@
         justify-content: center;
         align-items: center;
       }
-      .select {
+      .place-search__content {
         margin-left: 15px;
         cursor: pointer;
         padding: 10px 10px;
         font-size: 16px;
       }
-      .location {
+      .place__title {
         position: absolute;
         top: 170px;
         width: 90%;
@@ -218,7 +223,7 @@
         padding: 10px;
         border-bottom: 1px solid #333;
       }
-      .information {
+      .place-information {
         position: absolute;
         top: 215px;
         width: 95%;
@@ -237,15 +242,16 @@
         }
         .info-place {
           position: relative;
+          width: 100%;
           padding: 50px;
           line-height: 1.6;
           border-bottom: 1px solid #c8c8c8;
           box-sizing: border-box;
           cursor: pointer;
 
-          .place-info {
+          .info-place__elements {
             position: absolute;
-            width: 70%;
+            width: 100%;
             height: 92%;
             top: 2px;
             display: flex;

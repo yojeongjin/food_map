@@ -110,9 +110,7 @@
       },
       onReceive(i) {
         let position = new kakao.maps.LatLng(this.datas[i].y, this.datas[i].x)
-
-        console.log(i)
-
+        
         let customOverlay = new kakao.maps.CustomOverlay({
           position,
           xAnchor: 0.5,

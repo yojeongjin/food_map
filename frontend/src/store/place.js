@@ -1,3 +1,5 @@
+
+
 export default {
   namespaced: true,
   state: () => ({
@@ -43,6 +45,6 @@ export default {
           })
         }
       })
-    }
+    },
   }
 }

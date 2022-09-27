@@ -18,12 +18,12 @@
             <li class="info-address">{{ data.address_name }}</li>
             <li class="info-phone">☏ {{ data.phone }}</li>
           </div>
-          <div class="info-save">
-            <div class="info-btns" @click="saveInfo">
-              <img src="../assets/blank-star.png" alt="저장안함" class="front"/>
-              <img src="../assets/star.png" alt="저장" class="back" />
+          <form class="info-save" @click="getIndex">
+            <div class="info-btns">
+              <div class="front" @click="saveInfo"></div>
+              <div class="back" @click="cancleInfo"></div>
             </div>
-          </div>
+          </form>
         </ul>
       </div>
     </div>
@@ -34,30 +34,24 @@
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
     data() {
       return {
         isShow: true,
-        saveIndex: Number(''),
         keyword: "",
         filters: ['한식','중식','일식','양식','카페'],
-        indexArray: []
       }
     },
     methods: {
-      saveInfo() {
-        const infoBtns = document.querySelectorAll('.info-btns > .front')
-        const front = document.querySelectorAll('.front')
-        const back = document.querySelectorAll('.back')
-
-        infoBtns.forEach((el, index) => {
-          el.onclick = () => {
-            this.saveIndex = index
-          }
-        })
-        front[this.saveIndex].style.transform = `rotateY(${180}deg)`
-        back[this.saveIndex].style.transform = `rotateY(${0}deg)`
-        
+      saveInfo(e) {
+        e.target.parentNode.children[0].style.transform = `rotateY(${180}deg)`
+        e.target.parentNode.children[1].style.transform = `rotateY(${0}deg)`
+      },
+      cancleInfo(e) {
+        e.target.parentNode.children[0].style.transform = `rotateY(${0}deg)`
+        e.target.parentNode.children[1].style.transform = `rotateY(${-180}deg)`
       },
       showSide() {
         this.isShow = !this.isShow;
@@ -71,15 +65,31 @@
         placeInfo.forEach((div,index) => {
           div.onclick = () => {
             this.emitter.emit('info', index)
-            
           }
         })
       },
       filterSelect(e) {
         let type = e.target.outerText
         this.$store.dispatch('place/searchPlaces', {keyword: this.keyword + '맛집' + `'${type}'`})
-      }
+      },
+      getIndex() {
+        const infoBtn = document.querySelectorAll('form > .info-btns')
 
+        infoBtn.forEach((div,index) => {
+          div.onclick = () => {
+            axios.post('http://localhost:3000/api/find', {
+              resName : this.datas[index].place_name,
+              resAdd : this.datas[index].address_name
+            })
+            .then((res) => {
+              console.log(res,'완료')
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+          }
+        })
+      },
     },
     computed: {
       datas() {
@@ -196,7 +206,7 @@
 
           .place-info {
             position: absolute;
-            width: 75%;
+            width: 70%;
             height: 92%;
             top: 2px;
             display: flex;
@@ -213,23 +223,30 @@
             }
           }
           .info-save {
-              position: relative;
-              top: -30px;
-              right: 10px;
-              display: flex;
-              justify-content: flex-end;
+              position: absolute;
+              top: 15px;
+              right: 15px;
+              width: 50px;
+              height: 30px;
               .info-btns {
-                position: absolute;
-
                 .front {
                 position: absolute;
                 backface-visibility: hidden;
+                background-image: url(../assets/blank-star.png);
+                background-repeat: no-repeat;
                 transform: rotateY(0deg);
+                width: 100%;
+                height: 100%;
+                display: hidden;
                }
                 .back {
-                  backface-visibility: hidden;
                   position: absolute;
                   transform: rotateY(-180deg);
+                  backface-visibility: hidden;
+                  background-repeat: no-repeat;
+                  background-image: url(../assets/star.png);
+                  width: 100%;
+                  height: 100%;
                 }
 
               }

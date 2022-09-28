@@ -4,7 +4,8 @@ import axios from "axios"
 export default {
   namespaced: true,
   state: () => ({
-    saveDatas: []
+    saveDatas: [],
+    newlyDatas: []
   }),
   getters: {},
   mutations: {
@@ -21,6 +22,14 @@ export default {
       commit('updateState', {
         saveDatas: data
       })
+    },
+    async getNewly({commit}) {
+      const res = await axios.get('http://localhost:3000/api/newly')
+      const { data } = res.data
+      commit('updateState', {
+        newlyDatas: data
+      })
     }
+    
   }
 }

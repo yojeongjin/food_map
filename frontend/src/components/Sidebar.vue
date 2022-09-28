@@ -19,10 +19,10 @@
               <li :data-code="data.id" class="info-address">{{ data.address_name }}</li>
               <li :data-code="data.id" class="info-phone">☏ {{ data.phone }}</li>
             </div>
-            <form class="info-save" @click="clickPlaceSave">
+            <form class="info-save">
               <div class="info-btns">
                 <div :data-code="data.id" class="front" @click="saveInfo"></div>
-                <div :data-code="data.id" class="back" @click="cancleInfo"></div>
+                <div class="back"></div>
               </div>
             </form>
           </ul>
@@ -60,10 +60,7 @@
       saveInfo(e) {
         e.target.parentNode.children[0].style.transform = `rotateY(${180}deg)`
         e.target.parentNode.children[1].style.transform = `rotateY(${0}deg)`
-      },
-      cancleInfo(e) {
-        e.target.parentNode.children[0].style.transform = `rotateY(${0}deg)`
-        e.target.parentNode.children[1].style.transform = `rotateY(${-180}deg)`
+        this.clickPlaceSave(e)
       },
       showSide() {
         this.isShow = !this.isShow;
@@ -94,6 +91,9 @@
         })
         .catch((err) => {
           console.log(err)
+          alert('이미 있는 값 입니다.')
+          e.target.parentNode.children[0].style.transform = `rotateY(${0}deg)`
+          e.target.parentNode.children[1].style.transform = `rotateY(${-180}deg)`
         })
       },
       getSaveDatas() {

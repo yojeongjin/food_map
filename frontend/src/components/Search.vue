@@ -14,6 +14,7 @@
     align-items: center;
     position: relative;
     padding: 5px 70px;
+    margin-top: 70px;
     margin-right: 10px;
     border-radius: 35px;
     border: 1px solid #FF6333;

@@ -65,7 +65,7 @@ export default {
     }
     .nav {
       position: absolute;
-      right: 0px;
+      right: -100px;
       bottom: 8px;
       display: flex;
       .nav-item {

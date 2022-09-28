@@ -1,23 +1,21 @@
 <template>
   <div class="container">
     <div class="inner">
-      <span>요즘 뜨는 맛집</span>
+      <span @click="show">요즘 뜨는 맛집</span>
       <div class="menu">
-        <div v-for="menu in menus" :key="menu.name" class="menu-item">
-          <RouterLink :to="menu.href">
-            <div class="menu-info">
-              <div class="menu-name">
-                # {{ menu.name }}
-              </div>
-              <div class="menu-location">
-                📍 위치 : {{ menu.location }}
-              </div>
-              <div class="menu-des">
-                {{ menu.description }}
-              </div>
+        <div v-for="newlyData in newlyDatas" :key="newlyData.newlyIdx" class="menu-item">
+          <div class="menu-info">
+            <div class="menu-name">
+              # {{ newlyData.newlyName }}
             </div>
-            <img :src="require(`../assets/photos/${menu.photo}`)" alt="테스트" class="menu-photo"/>
-          </RouterLink>
+            <div class="menu-locaition">
+              📍 {{ newlyData.newlyLocation }}
+            </div>
+            <div class="menu-des">
+              {{ newlyData.newlyDesc }}
+            </div>
+          </div>
+          <img :src="newlyData.newlyPhoto" alt="음식 사진" class="menu-photo"/>
         </div>
       </div>
     </div>
@@ -25,35 +23,20 @@
 </template>
 
 <script>
-
   export default { 
-    data() {
-      return {
-        menus: [
-          {
-            name:"가솔린앤로지스",
-            location: "부산시 부산진구 동성로",
-            href: "/",
-            photo: "newly1.jpg",
-            description : "장인의 츠케멘을 느끼고싶다면 이곳으로!"
-          },
-          {
-            name:"레스토랑 덱스터",
-            location: "서울특별시 강남구 청담동 삼성로",
-            href: "/",
-            photo: "newly2.jpg",
-            description : "버섯 퓨레가 곁들어진 스테이크가 일품!"
-          },
-          {
-            name:"하딩바",
-            location: "서울특별시 용산구 신흥로",
-            href: "/",
-            photo: "newly3.jpg",
-            description : "덕수궁 석조전을 건축한 '하딩'의 기백을 느낄 수 있는 원테이블 bar"
-          }
-        ]
+    mounted() {
+      this.$store.dispatch('save/getNewly')
+    },
+    methods: {
+      show() {
+        console.log(this.newlyDatas.newlyPhoto)
       }
-    }
+    },
+    computed: {
+      newlyDatas() {
+        return this.$store.state.save.newlyDatas
+      }
+    },
   }
 </script>
 
@@ -119,6 +102,7 @@
               padding-bottom: 10px;
             }
             .menu-des {
+              margin-top: 10px;
               font-size: 17px ;
               width: 300px;
               text-align: center;
@@ -134,5 +118,9 @@
         }
       }
     }
+  }
+  .img  {
+    width: 100%;
+    height: 100%;
   }
 </style>

@@ -1,22 +1,24 @@
 <template>
   <div class="container">
     <div class="inner">
-      <span @click="show">요즘 뜨는 맛집</span>
-      <div class="menu">
-        <div v-for="newlyData in newlyDatas" :key="newlyData.newlyIdx" class="menu-item">
-          <div class="menu-info">
-            <div class="menu-name">
-              # {{ newlyData.newlyName }}
+      <span>요즘 뜨는 맛집</span>
+      <div v-for="newlyData in newlyDatas" :key="newlyData.newlyIdx" class="menu">
+        <RouterLink :to="`/newly/${newlyData.newlyIdx}`">
+          <div class="menu-item">
+            <div class="menu-info">
+              <div class="menu-name">
+                # {{ newlyData.newlyName }}
+              </div>
+              <div class="menu-locaition">
+                📍 {{ newlyData.newlyLocation }}
+              </div>
+              <div class="menu-des">
+                {{ newlyData.newlyDesc }}
+              </div>
             </div>
-            <div class="menu-locaition">
-              📍 {{ newlyData.newlyLocation }}
-            </div>
-            <div class="menu-des">
-              {{ newlyData.newlyDesc }}
-            </div>
+            <img :src="newlyData.newlyPhoto" alt="음식 사진" class="menu-photo"/>
           </div>
-          <img :src="newlyData.newlyPhoto" alt="음식 사진" class="menu-photo"/>
-        </div>
+        </RouterLink> 
       </div>
     </div>
   </div>
@@ -24,13 +26,8 @@
 
 <script>
   export default { 
-    mounted() {
+    created() {
       this.$store.dispatch('save/getNewly')
-    },
-    methods: {
-      show() {
-        console.log(this.newlyDatas.newlyPhoto)
-      }
     },
     computed: {
       newlyDatas() {
@@ -67,6 +64,7 @@
       }
       .menu {
         margin-top: 100px;
+        margin-right:20px;
         height: 100%;
         display: flex;
         justify-content: center;
@@ -74,8 +72,11 @@
         flex: 1;
         position: relative;
         .menu-item {
-          margin: 0 20px;
-          height: 100%;
+          position: absolute;
+          top:0;
+          left:0;
+          right:0;
+          bottom:0;
           display:block;
           flex: 1;
           .menu-info {
@@ -84,7 +85,7 @@
             bottom: -20px;
             color: #fff;
             font-size: 17px ;
-            width: 29.9%;
+            width: 100%;
             height: 25.3%;
             z-index: 9;
             display: flex;
@@ -111,7 +112,7 @@
           }
           .menu-photo {
             position: absolute;
-            width: 29.9%;
+            width: 100%;
             height: 90.9%;
             border-radius: 4px;
           }

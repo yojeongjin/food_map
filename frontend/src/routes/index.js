@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from './Home'
 import Find from './Find'
+import NewlyItems from './NewlyItems'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -12,6 +13,10 @@ export default createRouter({
     {
       path: '/find',
       component: Find
-    }
+    },
+    {
+      path: '/newly/:idx',
+      component: NewlyItems
+    },
   ]
 })

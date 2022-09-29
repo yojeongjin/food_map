@@ -27,7 +27,7 @@ exports.add = (req,res) => {
 
 exports.delete = (req,res) => {
 	body = req.query;
-	console.log(req.query)
+
 	sql = "DELETE FROM Restraunts WHERE resIdx = ? ";
 	conn.query(sql,[body.resIdx],(err,result) => {
 		if(err) throw err;

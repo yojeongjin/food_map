@@ -7,3 +7,15 @@ exports.list = (req,res) => { //리스트 모듈 router 에서 호출
 		res.send({success:true,data:row})
 	})
 }
+
+
+exports.view = (req,res) => {
+	newlyIdx = req.params.idx.idx;
+
+	sql = "select * from mydb_food.Newly where newlyIdx = ? ";
+	conn.query(sql,[newlyIdx],(err,row) => {
+		if(err) throw err;
+		
+		res.send({success:true, data:row});
+	})
+}

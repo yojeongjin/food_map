@@ -5,6 +5,6 @@ import save from "./save"
 export default createStore({
   modules: {
     place,
-    save
+    save,
   }
 })

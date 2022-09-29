@@ -23,12 +23,12 @@
     background-color: rgb(253, 230, 188);
     .inner {
       width: 1200px;
-      height: 670px;
+      height: 400px;
       display: flex;
       position: relative;
       .search {
         position: absolute;
-        top: 280px;
+        top: 100px;
         left: 180px;
       }
     }

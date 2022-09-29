@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from './Home'
 import Find from './Find'
 import NewlyItems from './NewlyItems'
+import Board from './Board'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -18,5 +19,9 @@ export default createRouter({
       path: '/newly/:idx',
       component: NewlyItems
     },
+    {
+      path: '/board',
+      component: Board
+    }
   ]
 })

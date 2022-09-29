@@ -26,7 +26,7 @@
 
 <script>
   export default { 
-    created() {
+    mounted() {
       this.$store.dispatch('save/getNewly')
     },
     computed: {

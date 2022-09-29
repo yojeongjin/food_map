@@ -10,8 +10,8 @@ exports.list = (req,res) => { //리스트 모듈 router 에서 호출
 
 
 exports.view = (req,res) => {
-	newlyIdx = req.params.idx.idx;
-
+	newlyIdx = req.params.idx;
+	console.log(req.body)
 	sql = "select * from mydb_food.Newly where newlyIdx = ? ";
 	conn.query(sql,[newlyIdx],(err,row) => {
 		if(err) throw err;

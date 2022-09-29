@@ -6,6 +6,7 @@ export default {
   state: () => ({
     saveDatas: [],
     newlyDatas: [],
+    boardDatas: []
   }),
   getters: {},
   mutations: {
@@ -29,6 +30,14 @@ export default {
       const { data } = res.data
       commit('updateState', {
         newlyDatas: data
+      })
+    },
+    async getList({commit}) {
+      const res = await axios.get('http://localhost:3000/api/board')
+      console.log(res)
+      const { data } = res.data
+      commit('updateState', {
+        boardDatas: data
       })
     }
   }

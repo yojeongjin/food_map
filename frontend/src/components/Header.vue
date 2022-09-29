@@ -21,15 +21,15 @@ export default {
     return {
       navigations: [
         {
-            name: "맛집 가이드",
+            name: "게시판1",
+            href: "/board"
+        },
+        {
+            name: "게시판2",
             href: "/"
         },
         {
-            name: "지역별 대표음식",
-            href: "/"
-        },
-        {
-            name: "오늘 뭐먹지?",
+            name: "게시판3",
             href: "/"
         }
       ]

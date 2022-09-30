@@ -4,7 +4,7 @@
       <form>
         <div class="tbPhoto">
           📸 사진을 업로드 해주세요.
-          <input type="file" accept="image/*" class="tbPhoto-input" />
+          <input type="file" accept="image/*" ref="image" @change="onChangeFiles" class="tbPhoto-input" />
         </div>
         <div class="tbWrite">
           <div class="content"> TITLE
@@ -33,7 +33,6 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      boardPhoto: '',
       boardTitle: '',
       boardWriter: '',
       boardLocation: '',
@@ -41,6 +40,19 @@ export default {
     }
   },
   methods: {
+    onChangeFiles() {
+      let form = new FormData()
+      let image = this.$refs['image'].files[0]
+
+      form.append('image', image)
+
+      axios.post('http://localhost:3000/api/upload', form, {
+        header: { 'Content-Type': 'multipart/form-data' }
+      }).then((res) => {
+        console.log(res)
+      }) .catch (err => console.log(err))
+    },
+
     regPost() {
       this.form = { 
         boardPhoto: this.boardPhoto,
@@ -52,14 +64,14 @@ export default {
       axios.post('http://localhost:3000/api/board',this.form)
 			.then((res)=>{
 				if(res.data.success) {
-					alert('등록되었습니다.');
-					window.onload()
+					alert('등록되었습니다.')
+          window.location.reload()
 				} else {
-					alert("실행중 실패했습니다.\n다시 이용해 주세요");
+					alert("실행중 실패했습니다.\n다시 이용해 주세요")
 				}
 			})
 			.catch((err)=>{
-				console.log(err);
+				console.log(err)
 			})
     }
   }
@@ -75,6 +87,7 @@ export default {
       padding: 20px 20px;
       form {
         border-top: 2px solid black;
+        border-bottom: 2px solid black;
         .tbPhoto {
           border: 1px dashed #c8c8c8;
           margin: 5px;
@@ -119,6 +132,7 @@ export default {
       .btn {
         position: absolute;
         right: 20px;
+        margin-top: 15px;
         padding: 15px 25px;
         border: 1px solid #c8c8c8;
         border-radius: 15px;

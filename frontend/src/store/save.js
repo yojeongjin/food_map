@@ -6,7 +6,8 @@ export default {
   state: () => ({
     saveDatas: [],
     newlyDatas: [],
-    boardDatas: []
+    boardDatas: [],
+    photo: []
   }),
   getters: {},
   mutations: {
@@ -38,6 +39,14 @@ export default {
       const { data } = res.data
       commit('updateState', {
         boardDatas: data
+      })
+    },
+    async getPhoto({commit}) {
+      const res = await axios.get('http://localhost:3000/api/upload')
+      console.log(res)
+      const { data } = res.data
+      commit('updateState', {
+        photo: data
       })
     }
   }

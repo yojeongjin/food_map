@@ -2,11 +2,11 @@
   <div class="container">
     <div class="inner">
       <div v-for="boardData in boardDatas" :key="boardData.boardIdx" class="post">
-        <div class="post-list">
-          <div class="bd-photo"></div>
+        <div v-for="photo in photoImg" :key="photo.idPhoto"  class="post-list">
+          <img :src="photo.urlPhoto" alt="음식 사진" class="bd-photo" />
           <div class="bd-info">
             <div class="bd-title">{{ boardData.boardTitle }}</div>
-            <div class="bd-location">{{ boardData.boardLocation }}</div>
+            <div class="bd-writer">{{ boardData.boardWriter }}</div>
           </div>
         </div>
       </div>
@@ -17,12 +17,21 @@
 <script>
 
 export default {
+  methods: {
+    show() {
+      console.log(this.photoImg)
+    }
+  },
   mounted() {
     this.$store.dispatch('save/getList')
+    this.$store.dispatch('save/getPhoto')
   },
   computed: {
     boardDatas() {
       return this.$store.state.save.boardDatas
+    },
+    photoImg() {
+      return this.$store.state.save.photo
     }
   },
 }
@@ -51,6 +60,10 @@ export default {
           left: 0;
           right: 0;
           border: 6px solid #fff9da;
+        }
+        .bd-photo {
+          width: 100%;
+          height: 100%;
         }
         .bd-info {
           background-color: rgba(#fff, 0.3);

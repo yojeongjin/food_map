@@ -25,6 +25,7 @@ const upload = multer({
 })
 
 router.get("/",dao.list);
+router.get("/:items",dao.view);
 router.post("/", upload.single('image'), dao.add);
 
 router.all('*',(req, res)=> {

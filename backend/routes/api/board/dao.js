@@ -8,6 +8,17 @@ exports.list = (req,res) => {
 	})
 }
 
+exports.view = (req,res) => {
+	boardIdx = req.params.items;
+
+	sql = "select * from mydb_food.Board where boardIdx = ? ";
+	conn.query(sql,[boardIdx],(err,row) => {
+		if(err) throw err;
+		
+		res.send({success:true, data:row});
+	})
+}
+
 exports.add = (req,res) => {
 	url = req.file.location
 	console.log(req.form)

@@ -2,6 +2,7 @@
   <div class="container">
     <div class="inner">
       <div v-for="boardData in boardDatas" :key="boardData.boardIdx" class="post">
+        <RouterLink :to="`/board/${boardData.boardIdx}`">
         <div class="post-list">
           <img :src="boardData.boardUrl" alt="음식 사진" class="bd-photo" />
           <div class="bd-info">
@@ -9,53 +10,17 @@
             <div class="bd-writer">{{ boardData.boardWriter }}</div>
           </div>
         </div>
+       </RouterLink>
       </div>
     </div>
   </div>
-
-    <!-- <div class="modal">
-      <button @click="show">X</button>
-      <div class="modal-inner">
-        <div class="modal-photo">
-          <img :src="photo.urlPhoto" alt="음식 사진" />
-        </div>
-        <div class="modal-info">
-          <div class="modal-title">{{ boardData.boardTitle }}</div>
-          <div class="modal-about">
-            <h3>WRITER</h3>
-            💌 {{ boardData.boardWriter }}
-          </div>
-          <div class="modal-about">
-            <h3>LOCATION</h3>
-            💌 {{ boardData.boardLoation }}
-          </div>
-          <div class="modal-content">
-            <h3>CONTENT</h3>
-          </div>
-          <div class="modal-story">
-            {{ boardData.boardContent }}
-          </div>
-        </div>
-      </div>
-    </div> -->
 </template>
 
 <script>
 
 export default {
-  data() {
-    return {
-      isShow: false
-    }
-  },
-  methods: {
-    show() {
-      this.isShow = !this.isShow;
-    }
-  },
   mounted() {
     this.$store.dispatch('save/getList')
-    console.log(this.boardDatas)
   },
   computed: {
     boardDatas() {

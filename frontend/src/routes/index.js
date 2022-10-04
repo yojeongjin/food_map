@@ -3,6 +3,7 @@ import Home from './Home'
 import Find from './Find'
 import NewlyItems from './NewlyItems'
 import Board from './Board'
+import BoardItems from './BoardItems'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -22,6 +23,10 @@ export default createRouter({
     {
       path: '/board',
       component: Board
+    },
+    {
+      path: '/board/:items',
+      component: BoardItems
     }
   ]
 })

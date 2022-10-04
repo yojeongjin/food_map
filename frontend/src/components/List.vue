@@ -35,6 +35,7 @@ export default {
     margin-top: 200px;
     .inner {
       margin-left: 600px;
+      height: 900px;
       display: flex;
       flex-wrap: wrap;
       .post-list {

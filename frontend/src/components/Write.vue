@@ -84,8 +84,10 @@ export default {
 
 <style lang="scss" scoped>
   .container {
-    width: 500px;
+    margin-top: 200px;
     .inner {
+      width: 500px;
+      height: 900px;
       padding: 20px 20px;
       form {
         border-top: 2px solid black;

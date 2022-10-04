@@ -42,14 +42,14 @@
   .container {
     background-color: #fefdf8;
     width: 100%;
-    height: 500px;
+    padding-bottom: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
     .inner {
       margin-top: 100px;
       width: 1200px;
-      height: 100%;
+      height: 500px;
       display: flex;
       justify-content: center;
       align-items: center;

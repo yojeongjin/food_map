@@ -8,6 +8,7 @@
 
 <script>
   import Search from './Search.vue';
+
   export default {
     components: { Search }
   }

@@ -42,7 +42,7 @@
   .container {
     background-color: #fefdf8;
     width: 100%;
-    padding-bottom: 10%;
+    padding-bottom: 20%;
     display: flex;
     justify-content: center;
     align-items: center;

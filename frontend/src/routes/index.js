@@ -27,6 +27,6 @@ export default createRouter({
     {
       path: '/board/:items',
       component: BoardItems
-    }
+    },
   ]
 })

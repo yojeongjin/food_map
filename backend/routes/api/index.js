@@ -2,6 +2,7 @@ const router = require('express').Router();
 const find = require('./find');
 const newly = require('./newly'); 
 const board = require('./board');
+const menu = require('./menu');
 
 router.all('*',(req, res, next)=>{
 	console.log("path="+req.path);
@@ -11,6 +12,7 @@ router.all('*',(req, res, next)=>{
 router.use("/find",find); 
 router.use("/newly",newly); 
 router.use("/board",board);
+router.use("/menu",menu);
 
 
 router.all('*',(req, res)=>{

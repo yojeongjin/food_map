@@ -7,7 +7,7 @@ export default {
     saveDatas: [],
     newlyDatas: [],
     boardDatas: [],
-    photo: []
+    menuDatas: []
   }),
   getters: {},
   mutations: {
@@ -39,6 +39,14 @@ export default {
       const data = res.data.data
       commit('updateState', {
         boardDatas: data
+      })
+    },
+    async getMenu({commit}) {
+      const res = await axios.get('http://localhost:3000/api/menu')
+      console.log(res.data.data)
+      const data = res.data.data
+      commit('updateState', {
+        menuDatas: data.sort(() => Math.random() - 0.5)
       })
     }
   }

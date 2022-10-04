@@ -3,9 +3,9 @@
     <div class="inner">
       <!-- <Logo /> -->
       <div class="nav">
-        <div v-for="nav in navigations" :key="nav.name" class="nav-item">
-          <RouterLink :to="nav.href" class="nav-link">
-            {{nav.name}}
+        <div class="nav-item">
+          <RouterLink to="/board" class="nav-link">
+            맛집 가이드
           </RouterLink>
         </div>
       </div>
@@ -15,28 +15,11 @@
 
 <script>
 
+
 // import Logo from './Logo.vue';
-export default {
-  data() {
-    return {
-      navigations: [
-        {
-            name: "게시판1",
-            href: "/board"
-        },
-        {
-            name: "게시판2",
-            href: "/"
-        },
-        {
-            name: "게시판3",
-            href: "/"
-        }
-      ]
-    };
-  },
-  // components: { Logo }
-}
+// export default {
+//     components: { Logo }
+// }
 </script>
 
 
@@ -72,11 +55,8 @@ export default {
         font-size: 20px;
         font-weight: 500;
         padding: 10px 50px;
-        display: block;
+        display: flex;
         color: #605f5f;
-        &:hover {
-          color: #000;
-        }
         ::before {
           content: "";
           width: 35px;

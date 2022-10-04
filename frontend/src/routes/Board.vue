@@ -16,7 +16,7 @@ export default {
     position: relative;
     .write {
       position: absolute;
-      top: 200px;
+      top: 0;
     }
   }
 </style>

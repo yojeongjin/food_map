@@ -1,11 +1,11 @@
 <template>
   <Header />
   <RouterView />
+
 </template>
 
 <script>
 import Header from './components/Header.vue';
-
 export default {
     components: { Header }
 }
@@ -17,5 +17,6 @@ export default {
     font-family: 'SCoreDream';
     font-style: normal;
     font-display: swap;
+    position: relative;
   }
 </style>

@@ -85,7 +85,6 @@ export default {
 <style lang="scss" scoped>
   .container {
     width: 500px;
-    height: 90%;
     .inner {
       padding: 20px 20px;
       form {
@@ -99,7 +98,6 @@ export default {
           justify-content: center;
           align-items: center;
           position: relative;
-          cursor: pointer;
           .tbPhoto-input {
             position: absolute;
             right: 0;
@@ -107,6 +105,7 @@ export default {
             bottom: 0;
             left: 0;
             opacity: 0;
+            cursor: pointer;
           }
           .tbPhoto-preview {
             width: 100%;

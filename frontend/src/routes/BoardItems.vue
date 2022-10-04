@@ -53,18 +53,15 @@ export default {
  .modal {
     margin-top: 200px;
     height: 700px;
-    border: 1px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
     .modal-inner {
-      border: 1px solid orange;
       width: 95%;
       height: 95%;
       display: flex;
       .modal-photo {
-        border: 1px solid red;
         border-radius: 15px;
         box-sizing: border-box;
         flex-shrink: 0;

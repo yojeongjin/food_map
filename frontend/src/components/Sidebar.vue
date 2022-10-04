@@ -109,6 +109,7 @@
         }})
         .then((res) => {
           console.log(res,'삭제완료')
+          window.location.reload()
         })
         .catch((err) => {
           console.log(err)

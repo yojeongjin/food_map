@@ -45,12 +45,7 @@ export default {
     .catch((err) => {
       console.log(err)
     })
-  },
-  methods: {
-    show() {
-      console.log(this.itemDatas)
-    }
-  },
+  }
 }
 </script>
 

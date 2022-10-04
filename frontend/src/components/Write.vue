@@ -3,8 +3,9 @@
     <div class="inner">
       <form>
         <div class="tbPhoto">
-          📸 사진을 업로드 해주세요.
+          {{ msg }}
           <input type="file" accept="image/*" ref="image" @change="onChangeFiles" class="tbPhoto-input" />
+          <img v-if="boardUrl" :src="boardUrl" class="tbPhoto-preview" />
         </div>
         <div class="tbWrite">
           <div class="content"> TITLE
@@ -33,46 +34,48 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      boardUrl: null,
       boardTitle: '',
       boardWriter: '',
       boardLocation: '',
       boardContent: '',
+      msg: '📸 사진을 업로드 해주세요.'
     }
   },
   methods: {
-    onChangeFiles() {
+    onChangeFiles(e) {
+      const file = e.target.files[0]
+      this.boardUrl = URL.createObjectURL(file);
+      this.msg= '';
+    },
+
+    regPost() {
+
       let form = new FormData()
       let image = this.$refs['image'].files[0]
 
       form.append('image', image)
+      form.append('boardTitle',this.boardTitle)
+      form.append('boardWriter', this.boardWriter)
+      form.append('boardLoacation', this.boardLocation)
+      form.append('boardContent', this.boardContent)
 
-      axios.post('http://localhost:3000/api/upload', form, {
+      if(!this.boardTitle) { 
+				alert("제목을 입력해 주세요");
+				return;
+			}
+      
+      axios.post('http://localhost:3000/api/board', form, {
         header: { 'Content-Type': 'multipart/form-data' }
       }).then((res) => {
-        console.log(res)
-      }) .catch (err => console.log(err))
-    },
-
-    regPost() {
-      this.form = { 
-        boardPhoto: this.boardPhoto,
-        boardTitle: this.boardTitle,
-        boardWriter: this.boardWriter,
-        boardLocation: this.boardLocation,
-        boardContent: this.boardContent,
-			}
-      axios.post('http://localhost:3000/api/board',this.form)
-			.then((res)=>{
-				if(res.data.success) {
+        if(res.data.success) {
 					alert('등록되었습니다.')
           window.location.reload()
 				} else {
 					alert("실행중 실패했습니다.\n다시 이용해 주세요")
 				}
-			})
-			.catch((err)=>{
-				console.log(err)
-			})
+        console.log(res)
+      }) .catch (err => console.log(err))
     }
   }
 }
@@ -96,13 +99,18 @@ export default {
           justify-content: center;
           align-items: center;
           position: relative;
-          >.tbPhoto-input {
+          cursor: pointer;
+          .tbPhoto-input {
             position: absolute;
             right: 0;
             top: 0;
             bottom: 0;
             left: 0;
             opacity: 0;
+          }
+          .tbPhoto-preview {
+            width: 100%;
+            height: 100%;
           }
         }
         .tbWrite {

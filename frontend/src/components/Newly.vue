@@ -41,14 +41,13 @@
 <style lang="scss" scoped>
   .container {
     background-color: #fefdf8;
-    width: 100%;
     padding-bottom: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
     .inner {
       margin-top: 100px;
-      width: 1200px;
+      width: 80%;
       height: 500px;
       display: flex;
       justify-content: center;

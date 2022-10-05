@@ -7,7 +7,7 @@
 
 <style lang="scss" scoped>
   .search {
-    width: 800px;
+    width: 90%;
     height:80px;
     display: flex;
     justify-content: center;
@@ -26,6 +26,7 @@
       margin: 0 14px 8px 0;
     }
      .search-map{
+      display: block;
       color: #FF6333;
       font-size: 44px;
       font-weight: 300;

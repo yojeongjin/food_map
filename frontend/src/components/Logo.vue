@@ -8,7 +8,7 @@
 <style lang="scss" scoped>
   
   .logo-img {
-      width: 150px;
-      height: 170px;
+      width: 200px;
+      height: 220px;
     }
 </style>

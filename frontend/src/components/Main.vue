@@ -13,7 +13,7 @@
           </div>
           <div class="random-modal-menu">
             <div class="menu-slot">
-              <ul v-for="menuData in menuDatas" :key="menuData.id" class="slot-box" v-bind:class="{ 'rolling': isRolling, 'rolling2': isRolling2 }">
+              <ul v-for="menuData in menuDatas" :key="menuData.id" class="slot-box" :class="{ 'rolling': isRolling, 'rolling2': isRolling2 }">
                 <li class="slot-item"> {{ menuData.menuName }}</li>
               </ul>
             </div>
@@ -68,9 +68,8 @@
   @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
   
   .main {
-    margin-top: 160px;
-    width: 100%;
-    background-color: rgb(253, 230, 188);
+    margin-top: 170px;
+    // background-color: rgb(253, 230, 188);
     display: flex;
     justify-content: center;
     align-items: center;

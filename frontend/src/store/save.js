@@ -45,8 +45,12 @@ export default {
       const res = await axios.get('http://localhost:3000/api/menu')
       console.log(res.data.data)
       const data = res.data.data
+
+      let randomData = data.sort(() => Math.random() - 0.5)
+      randomData.length = 15
+
       commit('updateState', {
-        menuDatas: data.sort(() => Math.random() - 0.5)
+        menuDatas: randomData
       })
     }
   }

@@ -13,14 +13,14 @@
           </div>
           <div class="random-modal-menu">
             <div class="menu-slot">
-              <ul v-for="menuData in menuDatas" :key="menuData.id" class="slot-box rolling">
+              <ul v-for="menuData in menuDatas" :key="menuData.id" class="slot-box" v-bind:class="{ 'rolling': isRolling, 'rolling2': isRolling2 }">
                 <li class="slot-item"> {{ menuData.menuName }}</li>
               </ul>
             </div>
           </div>
           <div class="random-modal-return">
-            <div class="slot-return">
-              <img src="../assets/rotate.png" alt="다시찾기" />
+            <div class="slot-return" @click="getMenu">
+              <img src="../assets/rotate.png" alt="다시찾기"/>
               다시 골라주세요🥲
             </div>
           </div>
@@ -38,6 +38,8 @@
     data() {
       return {
         isShow: false,
+        isRolling: true,
+        isRolling2: false
       }
     },
     mounted() {
@@ -46,6 +48,11 @@
     methods: {
       show() {
         this.isShow = !this.isShow
+      },
+      getMenu() {
+        this.$store.dispatch('save/getMenu')
+        this.isRolling = !this.isRolling
+        this.isRolling2 = !this.isRolling2
       }
     },
     computed: {
@@ -144,7 +151,9 @@
                 &.rolling{
                 animation-name: rotate1;
                 }
-
+                &.rolling2 {
+                  animation-name: rotate2;
+                }
                 .slot-item {
                   font-family: "Roboto Mono", monospace;
                   font-size: 20px;
@@ -210,12 +219,17 @@
         transform: rotateX(0deg);
         margin-top: -50px;
       }
+      20%{
+        transform: rotateX(-1080deg);
+        margin-top: -40px;
+      }
       50%{
         transform: rotateX(-1380deg);
+        margin-top: -30px;
       }
       70%{
         transform: rotateX(-1420deg);
-        margin-top: -30px;
+        margin-top: -20px;
       }
       90%{
         transform: rotateX(-1435deg);
@@ -223,6 +237,27 @@
       }
       100% {
         transform: rotateX(-1440deg);
+      }
+    }
+    @keyframes rotate2 {
+      0% {
+        transform: rotateX(0deg);
+        margin-top: -50px;
+      }
+      50%{
+        transform: rotateX(-1280deg);
+        margin-top: -40px;
+      }
+      70%{
+        transform: rotateX(-1384deg);
+        margin-top: -30px;
+      }
+      90%{
+        transform: rotateX(-1399deg);
+        margin-top: -10px;
+      }
+      100% {
+        transform: rotateX(-1404deg);
       }
     }
   }

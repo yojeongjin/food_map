@@ -8,6 +8,8 @@
             맛집 가이드
           </RouterLink>
         </div>
+        <div>로그인</div>
+        <div>회원가입</div>
       </div>
     </div>
   </header>

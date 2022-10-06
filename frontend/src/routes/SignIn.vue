@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="sign-in">접속하기</div>
-        <a href="/" class="sign-up">회원가입</a>
+        <RouterLink to="/join">회원가입</RouterLink>
       </div>
     </div>
   </div>
@@ -122,8 +122,6 @@ export default {
           margin-bottom: 16px;
           cursor: pointer;
           padding: 0 13px;
-        }
-        .sign-up {
         }
       }
     }

@@ -21,10 +21,9 @@ exports.view = (req,res) => {
 
 exports.add = (req,res) => {
 	url = req.file.location
-	console.log(req.form)
 	body = req.body;
-	sql = " insert into Board (boardUrl, boardTitle, boardWriter, boardLocation, boardContent) values (?, ?, ?, ?, ?) ";
 
+	sql = " insert into Board (boardUrl, boardTitle, boardWriter, boardLocation, boardContent) values (?, ?, ?, ?, ?) ";
 	conn.query(sql,
 		[url, body.boardTitle, body.boardWriter, body.boardLocation, body.boardContent],(err,result)=>{
 		if(err) throw err;

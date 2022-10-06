@@ -5,7 +5,7 @@
         <div class="join-input">
           <span style="margin-right:50px;">아이디</span>
           <div class="input-box">
-            <input v-model="userId" type="text" placeholder="아이디를 입력해주세요."/>
+            <input v-model="userId" type="text" placeholder="6~20자의 영문자와 숫자만 사용 가능합니다."/>
           </div>
           <div class="check">
             <div class="checkbox" @click="checkId">
@@ -19,7 +19,7 @@
         <div class="join-input">
           <span style="margin-right:37px;">비밀번호</span>
           <div class="input-box">
-            <input type="password" placeholder="비밀번호를 입력해주세요."/>
+            <input type="password" placeholder="8~16자 문자, 숫자만 사용가능합니다."/>
           </div>
           <div class="check">
           </div>
@@ -27,19 +27,19 @@
         <div class="join-input">
           비밀번호 확인
           <div class="input-box">
-            <input type="password" placeholder="비밀번호를 입력해주세요."/>
+            <input type="password" placeholder="8~16자 문자, 숫자만 사용가능합니다."/>
           </div>
           <div class="check"></div>
         </div>
         <div class="join-input">
           <span style="margin-right:50px;">닉네임</span>
           <div class="input-box">
-            <input type="text" placeholder="닉네임을 입력해주세요."/>
+            <input type="text" placeholder="두 글자 이상 입력해 주세요."/>
           </div>
           <div class="check"></div>
         </div>
         <div class="join-button">가입하기</div>
-        <a href="/">돌아가기</a>
+        <RouterLink to="/">돌아가기</RouterLink>
       </div>
     </div>
   </div>

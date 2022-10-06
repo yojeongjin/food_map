@@ -1,5 +1,7 @@
 const db = require('../../../config/db'); //db설정 호출
 const conn =  db.init(); //db 연결
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 exports.list = (req,res) => {
   const { userId } = req.query;
@@ -60,10 +62,26 @@ exports.add = (req,res) => {
     })
   }
 
+  if (password === repassword) {
+    sql = "insert into Users (nickname, userId, password, repassword) values (?, ?, ?, ?)";
+    conn.query(sql,[nickname, userId, password, repassword],(err,rows)=>{
+      if(err) throw err;
+      const userIdx = rows.insertId;
+      const secretKey = process.env.SECRET_KEY
 
-	sql = "insert into Users (nickname, userId, password, repassword) values (?, ?, ?, ?)";
-	conn.query(sql,[nickname, userId, password, repassword],(err,rows)=>{
-		if(err) throw err;
+      const token = jwt.sign(
+        { userIdx: userIdx, nickname: nickname },
+        secretKey
+      )
 
-	})
+      res.send({
+        result: { jwt: token },
+        success: true,
+        code: 200,
+        msg:'회원가입 성공.'
+      })
+    })
+  } else {
+    res.send('비밀번호가 일치하지 않습니다.')
+  }
 }

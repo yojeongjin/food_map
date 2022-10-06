@@ -45,15 +45,23 @@ export default {
     getSignIn() {
       axios.post('http://localhost:3000/api/signin', {
         userId: this.userId,
-        password: this.password,
+        password: this.password
       })
       .then((res) => {
-        console.log(res,'완료')
+        
         if(res.data.success) {
-          alert('로그인 완료')
-          window.location.reload()
+          if(this.active === true) {
+            const jwt = res.data.result.jwt;
+            localStorage.setItem('x-acess-token', jwt)
+          } else {
+            const jwt = res.data.result.jwt;
+            localStorage.removeItem('x-acess-token', jwt)
+          }
+          alert(res.data.msg)
+          window.location.replace('/')
+
         } else {
-          alert('회원정보가 존재하지 않습니다.')
+          alert(res.data.msg)
         }
       })
       .catch((err) => {

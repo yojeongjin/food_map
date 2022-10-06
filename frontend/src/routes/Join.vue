@@ -92,8 +92,11 @@
         })
         .then((res) => {
           console.log(res,'완료')
-          alert('회원가입 완료')
-          window.location.reload()
+          alert(res.data.msg)
+
+          const jwt = res.data.result.jwt;
+          localStorage.setItem('x-acess-token', jwt)
+          window.location.replace('/')
         })
         .catch((err) => {
           console.log(err)

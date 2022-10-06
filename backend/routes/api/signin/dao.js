@@ -4,6 +4,17 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 
+exports.list = (req,res) => { 
+  const { userIdx, nickname } = req.verifiedToken
+
+  return res.send({
+    result: { userIdx: userIdx, nickname: nickname },
+    success: true,
+    code: 200,
+    msg:'유효한 토큰입니다.'
+  })
+}
+
 exports.add = (req,res) => {
   const { userId, password } = req.body
 
@@ -32,7 +43,5 @@ exports.add = (req,res) => {
         msg:'로그인 성공'
       })
     }
-
-
 	})
 }

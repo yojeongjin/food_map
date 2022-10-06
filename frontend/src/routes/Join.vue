@@ -19,7 +19,7 @@
         <div class="join-input">
           <span style="margin-right:37px;">비밀번호</span>
           <div class="input-box">
-            <input type="password" placeholder="8~16자 문자, 숫자만 사용가능합니다."/>
+            <input v-model="password" type="password" placeholder="8~16자 문자, 숫자만 사용가능합니다."/>
           </div>
           <div class="check">
           </div>
@@ -27,18 +27,18 @@
         <div class="join-input">
           비밀번호 확인
           <div class="input-box">
-            <input type="password" placeholder="8~16자 문자, 숫자만 사용가능합니다."/>
+            <input v-model="repassword" type="password" placeholder="8~16자 문자, 숫자만 사용가능합니다."/>
           </div>
           <div class="check"></div>
         </div>
         <div class="join-input">
           <span style="margin-right:50px;">닉네임</span>
           <div class="input-box">
-            <input type="text" placeholder="두 글자 이상 입력해 주세요."/>
+            <input v-model="nickname" type="text" placeholder="두 글자 이상 입력해 주세요."/>
           </div>
           <div class="check"></div>
         </div>
-        <div class="join-button">가입하기</div>
+        <button class="join-button" @click="join">가입하기</button>
         <RouterLink to="/">돌아가기</RouterLink>
       </div>
     </div>
@@ -52,6 +52,9 @@
     data() {
       return {
         userId: '',
+        password: '',
+        repassword: '',
+        nickname: '',
         active: false,
         activeImg: require('../assets/idcheck.png'),
         normalImg: require('../assets/check.png')
@@ -59,7 +62,6 @@
     },
     methods: {
       checkId() {
-
         if(!this.userId) { 
           alert('아이디를 입력해 주세요.')
           return
@@ -72,6 +74,26 @@
           } else {
             alert('이미 사용 중인 아이디입니다.')
           }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      },
+      join() {
+        if(this.active === false) {
+          alert('아이디 중복확인을 해주세요')
+          return
+        }
+        axios.post('http://localhost:3000/api/join', {
+          userId: this.userId,
+          password: this.password,
+          repassword: this.repassword,
+          nickname: this.nickname
+        })
+        .then((res) => {
+          console.log(res,'완료')
+          alert('회원가입 완료')
+          window.location.reload()
         })
         .catch((err) => {
           console.log(err)
@@ -147,6 +169,8 @@
         .join-button {
           display: flex;
           color: #fff;
+          border: none;
+          font-size: 19px;
           background-color: #ff6333;
           justify-content: center;
           align-items: center;
@@ -154,7 +178,6 @@
           width: 60%;
           height: 10%;
           margin: 50px 0 15px 0;
-          cursor: pointer;
         }
       }
     }

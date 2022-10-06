@@ -4,11 +4,11 @@
       <div class="sign">
         <div class="sign-input" style="margin-bottom: 8px;">
         <img src="../assets/user.png" alt="아이디" class="icon"/>
-        <input type="text" placeholder="아이디를 입력해주세요."/>
+        <input v-model='userId' type="text" placeholder="아이디를 입력해주세요."/>
         </div>
         <div class="sign-input">
           <img src="../assets/padlock.png" alt="비밀번호" class="icon"/>
-          <input type="password" placeholder="비밀번호를 입력해주세요."/>
+          <input v-model="password" type="password" placeholder="비밀번호를 입력해주세요." @keyup.enter="getSignIn" />
         </div>
         <div class="sign-auto">
           <div class="checkbox">
@@ -18,7 +18,7 @@
             자동 로그인
           </div>
         </div>
-        <div class="sign-in">접속하기</div>
+        <button class="sign-in" @click="getSignIn">접속하기</button>
         <RouterLink to="/join">회원가입</RouterLink>
       </div>
     </div>
@@ -26,9 +26,13 @@
 </template>
 
 <script>
+  import axios from 'axios'
+
 export default {
   data() {
     return {
+      userId: '',
+      password: '',
       active: false,
       activeImg: require('../assets/check-active.png'),
       normalImg: require('../assets/check.png')
@@ -37,6 +41,24 @@ export default {
   methods: {
     getAuto() {
       this.active = !this.active
+    },
+    getSignIn() {
+      axios.post('http://localhost:3000/api/signin', {
+        userId: this.userId,
+        password: this.password,
+      })
+      .then((res) => {
+        console.log(res,'완료')
+        if(res.data.success) {
+          alert('로그인 완료')
+          window.location.reload()
+        } else {
+          alert('회원정보가 존재하지 않습니다.')
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     }
   }
 }
@@ -111,6 +133,8 @@ export default {
           }
         }
         .sign-in {
+          border: none;
+          font-size: 17px;
           display: flex;
           color: #fff;
           background-color: #ff6333;
@@ -120,7 +144,6 @@ export default {
           width: 60%;
           height: 10%;
           margin-bottom: 16px;
-          cursor: pointer;
           padding: 0 13px;
         }
       }

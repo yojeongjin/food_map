@@ -15,9 +15,9 @@ exports.add = (req,res) => {
 	conn.query(sql,[body.resName, body.resAdd, body.resUrl ],(err,result)=>{
 		if(err) throw err;
 		if(req.body.resName.includes(req.body.resName)) {
-			return res.send({
+			res.send({
 				success: false,
-				code:400,
+				code: 400,
 				msg:'이미 있는 값입니다.'
 			})
 		}

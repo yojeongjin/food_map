@@ -3,7 +3,7 @@ const find = require('./find');
 const newly = require('./newly'); 
 const board = require('./board');
 const menu = require('./menu');
-const signup = require('./signup');
+const join = require('./join');
 
 router.all('*',(req, res, next)=>{
 	console.log("path="+req.path);
@@ -14,7 +14,7 @@ router.use("/find",find);
 router.use("/newly",newly); 
 router.use("/board",board);
 router.use("/menu",menu);
-router.use("/signup",signup);
+router.use("/join",join);
 
 router.all('*',(req, res)=>{
 	res.status(404).send({success:false, msg:`api unknown uri ${req.path}`});

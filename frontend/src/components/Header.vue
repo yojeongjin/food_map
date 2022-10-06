@@ -11,8 +11,11 @@
       </div>
       <div class="nav-sign">
         <div class="nav-item">
-          <RouterLink to="/sign" class="nav-link">
+          <RouterLink to="/signin" class="nav-link">
             로그인
+          </RouterLink>
+          <RouterLink to="/join" class="nav-link">
+            회원가입
           </RouterLink>
         </div>
       </div>
@@ -69,6 +72,9 @@ export default {
       padding: 10px 50px;
       display: flex;
       color: #2e7e3e;
+    }
+    .nav-link {
+      margin-right: 15px;
     }
   }
 

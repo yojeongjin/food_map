@@ -4,7 +4,8 @@ import Find from './Find'
 import NewlyItems from './NewlyItems'
 import Board from './Board'
 import BoardItems from './BoardItems'
-import Sign from './Sign'
+import SignIn from './SignIn'
+import Join from './Join'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -30,8 +31,12 @@ export default createRouter({
       component: BoardItems
     },
     {
-      path: '/sign',
-      component: Sign
+      path: '/signin',
+      component: SignIn
+    },
+    {
+      path: '/join',
+      component: Join
     },
   ]
 })

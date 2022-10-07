@@ -1,7 +1,6 @@
 <template>
   <Loader v-if="loading"/>
-  <div id="map">
-  </div>
+  <div id="map"></div>
 </template>
 
 <script>
@@ -9,14 +8,13 @@ import Loader from './Loader.vue'
 
   export default {
     data() {
-        return {
-            map: null,
-            latitude: 0,
-            longitude: 0,
-            markers: [],
-            infowindow: null,
-            loading: true
-        };
+      return {
+        map: null,
+        latitude: 0,
+        longitude: 0,
+        markers: [],
+        loading: true
+      };
     },
     computed: {
         markersPositions() {
@@ -51,7 +49,7 @@ import Loader from './Loader.vue'
             const container = document.getElementById("map");
             const options = {
                 center: new kakao.maps.LatLng(this.latitude, this.longitude),
-                level: 6,
+                level: 5,
             };
             this.map = new kakao.maps.Map(container, options); // 지도 생성
             this.marker = new kakao.maps.Marker({
@@ -70,17 +68,44 @@ import Loader from './Loader.vue'
                 let marker = this.addMarker(position, i);
                 let customOverlay = new kakao.maps.CustomOverlay({
                     position,
+                    clickable:true,
                     xAnchor: 0.5,
-                    yAnchor: 1.05,
-                });
-                let content = `<div class="info-content">${this.datas[i].place_name}</div>`;
-                customOverlay.setContent(content);
+                    yAnchor: 1.1
+                })
+                let content = document.createElement('div')
+                content.className = 'info-content'
+
+                let title = document.createElement('div')
+                title.className = 'info-title'
+                title.appendChild(document.createTextNode(`${this.datas[i].place_name}`));
+                content.appendChild(title)
+
+                let phone = document.createElement('div')
+                phone.className = 'info-phone'
+                phone.appendChild(document.createTextNode(`${this.datas[i].phone}`));
+                content.appendChild(phone)
+
+                let detail = document.createElement('div')
+                detail.className = 'info-detail'
+                detail.appendChild(document.createTextNode(`${this.datas[i].place_url}`));
+                content.appendChild(detail)
+
+                let close = document.createElement('div')
+                close.className = 'info-close'
+                close.appendChild(document.createTextNode('확인'));
+                close.onclick = () => {
+                  customOverlay.setMap(null)
+                }
+                content.appendChild(close)
+
+                customOverlay.setContent(content)
                 kakao.maps.event.addListener(marker, "click", () => {
                     customOverlay.setMap(this.map);
-                });
+                })
             }
             const positions = markersPositions.map((position) => new kakao.maps.LatLng(...position));
             const bounds = positions.reduce((bounds, latlng) => bounds.extend(latlng), new kakao.maps.LatLngBounds());
+
             this.map.setBounds(bounds);
         },
         addMarker(position, idx) {
@@ -100,14 +125,42 @@ import Loader from './Loader.vue'
             let position = new kakao.maps.LatLng(this.datas[i].y, this.datas[i].x);
             let customOverlay = new kakao.maps.CustomOverlay({
                 position,
+                clickable:true,
                 xAnchor: 0.5,
-                yAnchor: 1.05,
-            });
-            let content = `<div class="info-content">${this.datas[i].place_name}</div>`;
+                yAnchor: 1.1,
+            })
+
+            let content = document.createElement('div')
+            content.className = 'info-content'
+
+            let title = document.createElement('div')
+            title.className = 'info-title'
+            title.appendChild(document.createTextNode(`${this.datas[i].place_name}`));
+            content.appendChild(title)
+
+            let phone = document.createElement('div')
+            phone.className = 'info-phone'
+            phone.appendChild(document.createTextNode(`${this.datas[i].phone}`));
+            content.appendChild(phone)
+
+            let detail = document.createElement('div')
+            detail.className = 'info-detail'
+            detail.appendChild(document.createTextNode(`${this.datas[i].place_url}`));
+            content.appendChild(detail)
+
+            let close = document.createElement('div')
+            close.className = 'info-close'
+            close.appendChild(document.createTextNode('확인'));
+            close.onclick = () => {
+              customOverlay.setMap(null)
+            }
+            content.appendChild(close)
+
+            
             customOverlay.setContent(content);
             customOverlay.setMap(this.map);
-            let bounds = new kakao.maps.LatLngBounds();
-            bounds.extend(position);
+
+            this.map.setCenter(position);
         },
     },
     watch: {
@@ -125,10 +178,41 @@ import Loader from './Loader.vue'
     width: 100%;
     height: 100vh;
     .info-content {
-      border: 1px solid black;
+      background-color: #fff;
+      opacity: 90%;
       box-sizing: border-box;
       border-radius: 15px;
-      padding: 10px 10px;
+      padding: 10px 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .info-title {
+        margin-bottom: 5px;
+        font-size: 15px;
+        color: rgb(255, 111, 0);
+        font-weight: 500;
+        text-align: center;
+      }
+      .info-phone {
+        font-size: 12px;
+        color: #333;
+      }
+      .info-detail {
+        margin-top: 7px;
+        font-size: 12px;
+        color: rgb(16, 67, 249);
+      }
+      .info-close {
+        text-align: center;
+        margin-top: 10px;
+        padding: 10px 0 10px 0;
+        font-size: 13px;
+        width: 100%;
+        height: 100%;
+        border-top: 1px solid #c8c8c8;
+        color: rgb(255, 111, 0);
+      }
     }
   }
 </style>

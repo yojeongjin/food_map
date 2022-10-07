@@ -106,7 +106,9 @@
         }
       }
       .random-modal {
-        width: 80%;
+        flex-shrink: 0;
+        background: url('../assets/img.jpeg');
+        width: 60%;
         height: 90%;
         display: flex;
         flex-direction: column;

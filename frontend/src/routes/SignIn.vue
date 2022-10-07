@@ -78,6 +78,14 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      width: 50%;
+      height: 700px;
+    }
     .inner {
       width: 80%;
       height: 700px;
@@ -85,6 +93,7 @@ export default {
       justify-content: center;
       align-items: center;
       .sign {
+        z-index: 999;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -135,7 +144,7 @@ export default {
               margin-right: 8px;
               &.active {
                 background-color: #ff6333;
-                border: 1px solid #fff;
+                border: none;
               }
             }
           }

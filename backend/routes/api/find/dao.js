@@ -11,18 +11,24 @@ exports.list = (req,res) => { //리스트 모듈 router 에서 호출
 exports.add = (req,res) => {
  	body = req.body; //전송된 데이터를 받는다.
 	console.log(body)
-	sql = "INSERT INTO Restraunts (resName, resAdd, resUrl) values (?, ?, ?)";
-	conn.query(sql,[body.resName, body.resAdd, body.resUrl ],(err,result)=>{
+	sql = "select resAdd, resName,resUrl from Restraunts where resAdd = ? and resName = ? and resUrl =? " ;
+	conn.query(sql,[body.resName, body.resAdd, body.resUrl],(err,rows)=>{
 		if(err) throw err;
-		if(req.body.resName.includes(req.body.resName)) {
+		try {
+			sql = "insert into Restraunts (resName, resAdd, resUrl) values (?, ?, ?)";
+			conn.query(sql,[body.resName, body.resAdd, body.resUrl ],(err,rows)=>{
+				if(err) throw err;
+				res.send({success:true});
+			})
+		}catch {
 			res.send({
 				success: false,
 				code: 400,
-				msg:'이미 있는 값입니다.'
+				msg:'이미 저장한 맛집입니다.'
 			})
 		}
-		res.send({success:true});
 	})
+
 }
 
 exports.delete = (req,res) => {

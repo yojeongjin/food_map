@@ -1,7 +1,11 @@
 <template>
   <div v-for="itemData in itemDatas" :key="itemData.newlyIdx" class="container">
     <div class="inner">
-      <img :src="itemData.newlyPhoto" alt="대표사진" class="img"/>
+      <swiper :pagination="true" :navigation="true" :modules="modules" class="swiper">
+        <swiper-slide><img :src="itemData.newlyPhoto" alt="대표사진" class="img"/></swiper-slide>
+        <swiper-slide><img :src="itemData.newlyPhoto2" alt="대표사진" class="img"/></swiper-slide>
+        <swiper-slide><img :src="itemData.newlyPhoto3" alt="대표사진" class="img"/></swiper-slide>
+      </swiper>
       <div class="specs">
         <div class="title"> {{ itemData.newlyName }}</div>
         <div class="location"> 📍위치: {{ itemData.newlyLocation }}</div>
@@ -29,11 +33,17 @@
 
 <script>
 import axios from 'axios'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
+import 'swiper/css/pagination'
+import 'swiper/css/navigation'
+
+import { Pagination,Navigation } from 'swiper'
 
 export default {
   data() {
     return {
-      itemDatas: []
+      itemDatas: [],
     }
   },
   mounted() {
@@ -47,9 +57,25 @@ export default {
     .catch((err) => {
       console.log(err)
     })
+  },
+  components: { Swiper, SwiperSlide },
+  setup() {
+    return {
+      modules: [Pagination, Navigation]
+    }
   }
 }
 </script>
+
+<style>
+  .swiper-pagination-bullet-active {
+    background-color: #333;
+  }
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: #333;
+  }
+</style>
 
 <style lang="scss" scoped>
   .container {
@@ -62,12 +88,16 @@ export default {
       width: 80%;
       height: 90%;
       display: flex;
-      .img{
-      position: relative;
-      flex-shrink: 0;
-      width: 600px;
-      height: 600px;
-      margin-right: 70px;
+      .swiper {
+        position: relative;
+        flex-shrink: 0;
+        margin-right: 70px;
+        width: 600px;
+        height: 600px;
+        .img {
+          width:100%;
+          height: 100%;
+        }
       }
       .specs {
         flex-grow: 1;

@@ -84,15 +84,18 @@ export default {
       .nav-sign {
         position: absolute;
         top: 10px;
-        right: 0;
+        right: 10px;
         display: flex;
-        .nav-link {
-          font-size: 12px;
-          padding: 11px 16px;
-          display: block;
-          color: #656565;
-          &:hover {
-            color: black;
+        .non-nickname {
+          display: flex;
+          .nav-link {
+            font-size: 12px;
+            padding: 11px 16px;
+            display: block;
+            color: #656565;
+            &:hover {
+              color: black;
+            }
           }
         }
         .nickname {

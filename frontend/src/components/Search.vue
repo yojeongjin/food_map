@@ -1,14 +1,18 @@
 <template>
   <div class="search">
-    <img src="../assets/pin.png" alt="핀" />
-    <RouterLink to="/find" class="search-map">지도에서 맛집찾기</RouterLink>
+    <img src="../assets/pin1.png" alt="핀" />
+    <div class="search-title">
+      <RouterLink to="/find" class="search-map">Search Eat</RouterLink>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&family=Poppins:ital,wght@1,800&display=swap');
   .search {
-    width: 90%;
-    height:80px;
+    font-family: 'Poppins', sans-serif;
+    width: 50%;
+    height: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,8 +20,6 @@
     padding: 5px 70px;
     margin-top: 70px;
     margin-right: 10px;
-    border-radius: 35px;
-    border: 1px solid #FF6333;
     box-sizing: border-box;
     outline: none;
     img {
@@ -27,9 +29,9 @@
     }
      .search-map{
       display: block;
-      color: #FF6333;
-      font-size: 44px;
-      font-weight: 300;
+      color: #fff;
+      font-size: 50px;
+      font-weight: 500;
     }
   }
  

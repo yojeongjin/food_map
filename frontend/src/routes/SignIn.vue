@@ -52,10 +52,10 @@ export default {
         if(res.data.success) {
           if(this.active === true) {
             const jwt = res.data.result.jwt;
-            localStorage.setItem('x-acess-token', jwt)
+            localStorage.setItem('x-access-token', jwt)
           } else {
             const jwt = res.data.result.jwt;
-            localStorage.removeItem('x-acess-token', jwt)
+            localStorage.removeItem('x-access-token', jwt)
           }
           alert(res.data.msg)
           window.location.replace('/')
@@ -74,7 +74,7 @@ export default {
 
 <style lang="scss" scoped>
   .container {
-    margin-top: 170px;
+    margin-top: 100px;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -32,7 +32,7 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-    margin-top: 200px;
+    margin-top: 150px;
     .inner {
       margin-left: 600px;
       height: 900px;

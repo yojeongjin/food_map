@@ -3,7 +3,7 @@
     <div class="inner">
       <Search class="search"/>
       <div @click="show" class="random">
-        오늘 뭐먹지?
+        <img src="../assets/badge.png" alt="뱃지" />
       </div>
       <div v-if="isShow" class="random-modal">
         <div class="random-modal-inner">
@@ -33,6 +33,7 @@
 
 <script>
   import Search from './Search.vue';
+  import { gsap } from 'gsap';
 
   export default {
     data() {
@@ -44,6 +45,8 @@
     },
     mounted() {
       this.$store.dispatch('save/getMenu')
+      const tl = gsap.timeline()
+      tl.from('.random', {xPercent: -100, duration:2 })
     },
     methods: {
       show() {
@@ -53,6 +56,12 @@
         this.$store.dispatch('save/getMenu')
         this.isRolling = !this.isRolling
         this.isRolling2 = !this.isRolling2
+      },
+      badge() {
+        gsap.to(".random", {
+          scrollTrigger: ".random",
+          x: 100
+        })
       }
     },
     computed: {
@@ -64,18 +73,17 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
-  
+<style lang="scss" scoped>  
   .main {
-    margin-top: 170px;
-    // background-color: rgb(253, 230, 188);
+    margin-top: 100px;
+    background-image: url('../assets/bg8.png');
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     .inner {
       width: 80%;
-      height: 500px;
+      height: 400px;
       display: flex;
       position: relative;
       display: flex;
@@ -83,21 +91,23 @@
       align-items: center;
       .search {
         position: absolute;
-        top: 100px;
+        top: -50px;
       }
       .random {
         position: absolute;
-        bottom: 80px;
-        font-size: 20px;
-        font-weight: 500;
-        padding: 10px 50px;
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.80);
+        right: -80px;
+        top: 20px;
         display: flex;
-        color: rgb(252, 84, 0);
+        border-radius: 10px;
         cursor: pointer;
+        img {
+          border-radius: 10px;
+        }
       }
       .random-modal {
         width: 80%;
-        height: 100%;
+        height: 90%;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -112,7 +122,7 @@
           align-items: center;
           .random-modal-title {
             position: absolute;
-            top: 60px;
+            top: 30px;
             width: 60%;
             height: 20%;
             text-align: center;
@@ -123,12 +133,12 @@
               font-weight: 700;
             }
             h3 {
-              margin-top: 10px;
+              margin-top: 20px;
             }
           }
           .random-modal-menu {
             position: absolute;
-            top: 200px;
+            top: 180px;
             width: 50%;
             height: 30%;
             display: flex;
@@ -154,11 +164,10 @@
                   animation-name: rotate2;
                 }
                 .slot-item {
-                  font-family: "Roboto Mono", monospace;
-                  font-size: 20px;
+                  font-size: 18px;
                   font-weight: 500;
                   color: orangered;
-                  height: 50px;
+                  height: 40px;
                   display: flex;
                   justify-content: center;
                   align-items: center;
@@ -209,30 +218,28 @@
             width: 18px;
             height: 18px;
           }
-
         }
       }
     }
     @keyframes rotate1 {
       0% {
         transform: rotateX(0deg);
-        margin-top: -50px;
+        margin-top: -40px;
       }
       20%{
         transform: rotateX(-1080deg);
-        margin-top: -40px;
+        margin-top: -30px;
       }
       50%{
         transform: rotateX(-1380deg);
-        margin-top: -30px;
+        margin-top: -20px;
       }
       70%{
         transform: rotateX(-1420deg);
-        margin-top: -20px;
+        margin-top: -10px;
       }
       90%{
         transform: rotateX(-1435deg);
-        margin-top: -10px;
       }
       100% {
         transform: rotateX(-1440deg);
@@ -241,15 +248,15 @@
     @keyframes rotate2 {
       0% {
         transform: rotateX(0deg);
-        margin-top: -50px;
+        margin-top: -40px;
       }
       50%{
         transform: rotateX(-1280deg);
-        margin-top: -40px;
+        margin-top: -30px;
       }
       70%{
         transform: rotateX(-1384deg);
-        margin-top: -30px;
+        margin-top: -20px;
       }
       90%{
         transform: rotateX(-1399deg);

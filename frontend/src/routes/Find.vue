@@ -27,7 +27,7 @@ export default {
   .side-bar {
     position: absolute;
     left: 0;
-    top: 160px;
+    top: 100px;
     bottom: 0;
     z-index: 1000;
   }

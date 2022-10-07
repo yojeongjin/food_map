@@ -95,7 +95,7 @@
           alert(res.data.msg)
 
           const jwt = res.data.result.jwt;
-          localStorage.setItem('x-acess-token', jwt)
+          localStorage.setItem('x-access-token', jwt)
           window.location.replace('/')
         })
         .catch((err) => {
@@ -108,7 +108,7 @@
 
 <style lang="scss" scoped>
   .container {
-    margin-top: 170px;
+    margin-top: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -123,7 +123,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 60%;
+        width: 70%;
         height: 70%;
         .join-input {
           margin-left: 30px;

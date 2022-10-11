@@ -50,13 +50,8 @@ export default {
       .then((res) => {
         
         if(res.data.success) {
-          if(this.active === true) {
-            const jwt = res.data.result.jwt;
-            localStorage.setItem('x-access-token', jwt)
-          } else {
-            const jwt = res.data.result.jwt;
-            localStorage.removeItem('x-access-token', jwt)
-          }
+          const jwt = res.data.result.jwt;
+          localStorage.setItem('x-access-token', jwt)
           alert(res.data.msg)
           window.location.replace('/')
 
@@ -81,9 +76,11 @@ export default {
     &::before {
       content: '';
       display: block;
+      background-image: url('../assets/signup-bg.png');
+      background-repeat: no-repeat;
       position: absolute;
       left: 0;
-      width: 50%;
+      width: 100%;
       height: 700px;
     }
     .inner {
@@ -93,7 +90,7 @@ export default {
       justify-content: center;
       align-items: center;
       .sign {
-        z-index: 999;
+        z-index: 100;
         display: flex;
         flex-direction: column;
         justify-content: center;

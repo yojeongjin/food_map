@@ -7,7 +7,7 @@
           <img :src="boardData.boardUrl" alt="음식 사진" class="bd-photo" />
           <div class="bd-info">
             <div class="bd-title">{{ boardData.boardTitle }}</div>
-            <div class="bd-writer">{{ boardData.boardWriter }}</div>
+            <div class="bd-writer">작성자: {{ boardData.boardWriter }}</div>
           </div>
         </div>
        </RouterLink>
@@ -63,18 +63,21 @@ export default {
           background-color: rgba(#fff, 0.3);
           width: 100%;
           padding: 14px;
-          font-size: 15px;
           text-align: center;
           position: absolute;
           left: 0;
           bottom: 0;
           backdrop-filter: blur(10px);
+          box-sizing: border-box;
           .bd-title {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             margin: 5px;
             padding: 3px;
+          }
+          .bd-writer {
+            font-size: 13px;
           }
         }
       }

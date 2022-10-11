@@ -82,6 +82,10 @@ exports.add = (req,res) => {
       })
     })
   } else {
-    res.send('비밀번호가 일치하지 않습니다.')
+    res.send({
+      success: false,
+      code: 400,
+      message: '비밀번호가 일치하지 않습니다.'
+    })
   }
 }

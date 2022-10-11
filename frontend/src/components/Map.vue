@@ -100,7 +100,7 @@ import Loader from './Loader.vue'
 
                 customOverlay.setContent(content)
                 kakao.maps.event.addListener(marker, "click", () => {
-                    customOverlay.setMap(this.map);
+                  customOverlay.setMap(this.map);
                 })
             }
             const positions = markersPositions.map((position) => new kakao.maps.LatLng(...position));

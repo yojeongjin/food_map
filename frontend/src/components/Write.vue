@@ -17,7 +17,7 @@
           <div class="content"> LOCATION
             <input v-model="boardLocation" />
           </div>
-          <div class="content"> CONTENT
+          <div style="border:none;" class="content"> CONTENT
           </div>
           <textarea v-model="boardContent" class="textarea"></textarea>
         </div>
@@ -57,7 +57,7 @@ export default {
       form.append('image', image)
       form.append('boardTitle',this.boardTitle)
       form.append('boardWriter', this.boardWriter)
-      form.append('boardLoacation', this.boardLocation)
+      form.append('boardLocation', this.boardLocation)
       form.append('boardContent', this.boardContent)
 
       if(!this.boardTitle) { 
@@ -130,7 +130,7 @@ export default {
             }
           }
           .textarea {
-            margin: 0 0 20px 120px;
+            margin: -45px 0 20px 120px;
             width: 300px;
             height: 250px;
             resize: none;

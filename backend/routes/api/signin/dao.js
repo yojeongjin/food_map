@@ -16,7 +16,7 @@ exports.list = (req,res) => {
 }
 
 exports.add = (req,res) => {
-  const { userId, password } = req.body
+  const { userId, password, active } = req.body
 
 	sql = "select * from Users where userId = ? and password = ?";
 	conn.query(sql,[ userId, password ],(err,rows)=>{

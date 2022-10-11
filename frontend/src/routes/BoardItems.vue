@@ -7,7 +7,7 @@
         <div class="modal-info">
           <div class="modal-title">{{ boardData.boardTitle }}</div>
           <div class="modal-about">
-            <h3>WRITER</h3>
+            <h3>WRITER </h3>
             💌 {{ boardData.boardWriter }}
           </div>
           <div class="modal-about">
@@ -15,7 +15,7 @@
             💌 {{ boardData.boardLocation }}
           </div>
           <div class="modal-content">
-            <h3>CONTENT💌 </h3>
+            <h3>CONTENT 💌</h3>
           </div>
           <div class="modal-story">
             {{ boardData.boardContent }}
@@ -51,7 +51,7 @@ export default {
 
 <style lang="scss" scoped>
  .modal {
-  margin-top: 200px;
+  margin-top: 100px;
   height: 700px;
   display: flex;
   justify-content: center;
@@ -77,15 +77,15 @@ export default {
       width: 55%;
       height: 100%;
       flex-grow: 1;
+      margin-top: 20px;
+      border-bottom: 1px solid #eee;
       .modal-title {
         width: 90%;
-        box-sizing: border-box;
+        padding-top: 5px;
         font-size: 50px;
         font-weight: 500;
         margin: 5px 0 30px 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        white-space: wrap;
       }
       .modal-about {
         width: 90%;
@@ -102,10 +102,9 @@ export default {
 
       }
       .modal-story {
-        width: 70%;
-        margin: -35px 0 15px 130px;
+        width: 90%;
+        margin: 0 0 15px 0;
         line-height: 1.4;
-        box-sizing: border-box;
       }
       h3 {
         margin:0 6px 0 6px;

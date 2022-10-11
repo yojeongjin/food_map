@@ -96,17 +96,16 @@
             .menu-name {
               font-size: 19px ;
               padding-bottom: 12px;
-              color: rgb(4, 178, 252);
+              color: #04b2fc;
             }
             .menu-location {
               padding-bottom: 10px;
             }
             .menu-des {
               margin-top: 10px;
-              font-size: 17px ;
+              font-size: 15px ;
               width: 300px;
               text-align: center;
-              letter-spacing: 1.4;
             }
           }
           .menu-photo {

@@ -1,8 +1,6 @@
 <template>
-
   <Main />
   <Newly />
-
 </template>
 
 <script>

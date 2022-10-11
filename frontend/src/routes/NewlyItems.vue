@@ -69,17 +69,17 @@ export default {
 
 <style>
   .swiper-pagination-bullet-active {
-    background-color: #333;
+    background-color: #fff;
   }
   .swiper-button-prev,
   .swiper-button-next {
-    color: #333;
+    color: #fff;
   }
 </style>
 
 <style lang="scss" scoped>
   .container {
-    margin-top: 150px;
+    margin-top: 100px;
     height: 700px;
     display: flex;
     justify-content: center;

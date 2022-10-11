@@ -45,7 +45,8 @@ export default {
     getSignIn() {
       axios.post('http://localhost:3000/api/signin', {
         userId: this.userId,
-        password: this.password
+        password: this.password,
+        active: this.active
       })
       .then((res) => {
         

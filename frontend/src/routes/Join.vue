@@ -5,7 +5,7 @@
         <div class="join-input">
           <span style="margin-right:50px;">아이디</span>
           <div class="input-box">
-            <input v-model="userId" type="text" placeholder="6~20자의 영문자와 숫자만 사용 가능합니다."/>
+            <input v-model="userId" type="text" placeholder="6~20자의 영문자+숫자만 사용 가능합니다."/>
           </div>
           <div class="check">
             <div class="checkbox" @click="checkId">
@@ -19,7 +19,7 @@
         <div class="join-input">
           <span style="margin-right:37px;">비밀번호</span>
           <div class="input-box">
-            <input v-model="password" type="password" placeholder="8~16자 문자, 숫자만 사용가능합니다."/>
+            <input v-model="password" type="password" placeholder="8~16자 영문자+숫자만 사용가능합니다."/>
           </div>
           <div class="check">
           </div>
@@ -27,7 +27,7 @@
         <div class="join-input">
           비밀번호 확인
           <div class="input-box">
-            <input v-model="repassword" type="password" placeholder="8~16자 문자, 숫자만 사용가능합니다."/>
+            <input v-model="repassword" type="password" placeholder="8~16자 영문자+숫자만 사용가능합니다."/>
           </div>
           <div class="check"></div>
         </div>

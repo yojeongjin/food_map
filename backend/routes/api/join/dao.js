@@ -41,7 +41,7 @@ exports.add = (req,res) => {
     return res.send({
       success: false,
       code: 400,
-      message: '아이디를 확인해주세요'
+      message: '아이디는 6자리 이상이어야 합니다.'
     })
   }
 

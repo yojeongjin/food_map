@@ -38,5 +38,8 @@ export default createRouter({
       path: '/join',
       component: Join
     },
-  ]
+  ],
+  scrollBehavior() {
+    { window.scrollTo(0,0); }
+  }
 })

@@ -4,11 +4,9 @@
   </RouterLink>
 </template>
 
-
-<style lang="scss" scoped>
-  
+<style lang="scss" scoped>  
   .logo-img {
-      width: 200px;
-      height: 100px;
-    }
+    width: 200px;
+    height: 100px;
+  }
 </style>

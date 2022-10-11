@@ -42,6 +42,20 @@ export default {
       msg: '📸 사진을 업로드 해주세요.'
     }
   },
+  mounted() {
+    const jwt = localStorage.getItem('x-access-token')
+
+    axios.get('http://localhost:3000/api/signin', {
+      headers: { 'x-access-token': jwt }
+    })
+    .then((res) => {
+      if(res.data.code === 200) {
+        this.boardWriter = res.data.result.nickname
+      } else {
+        return
+      }
+    })
+  },
   methods: {
     onChangeFiles(e) {
       const file = e.target.files[0]
@@ -54,17 +68,39 @@ export default {
       let form = new FormData()
       let image = this.$refs['image'].files[0]
 
+      const jwt = localStorage.getItem('x-access-token')
+
       form.append('image', image)
       form.append('boardTitle',this.boardTitle)
       form.append('boardWriter', this.boardWriter)
       form.append('boardLocation', this.boardLocation)
       form.append('boardContent', this.boardContent)
 
+      if(!jwt) {
+        alert("로그인 해주세요");
+				return;
+      }
+
       if(!this.boardTitle) { 
 				alert("제목을 입력해 주세요");
 				return;
 			}
+
+      if(!this.boardWriter) { 
+				alert("작성자를 입력해 주세요");
+				return;
+			}
       
+      if(!this.boardLocation) { 
+				alert("위치를 입력해 주세요");
+				return;
+			}
+
+      if(!this.boardContent) { 
+				alert("내용을 입력해 주세요");
+				return;
+			}
+
       axios.post('http://localhost:3000/api/board', form, {
         header: { 'Content-Type': 'multipart/form-data' }
       }).then((res) => {

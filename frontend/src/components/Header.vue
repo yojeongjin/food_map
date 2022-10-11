@@ -35,6 +35,7 @@
 <script>
 
 import axios from 'axios';
+
 import Logo from './Logo.vue';
 export default {
     components: { Logo },
@@ -55,7 +56,6 @@ export default {
       if(res.data.code === 200) {
         this.nickname = res.data.result.nickname
         this.isNickname = false
-        console.log(res)
       } else {
         return
       }
@@ -63,8 +63,13 @@ export default {
   },
   methods: {
     getSignOut() {
-      localStorage.removeItem('x-access-token', this.jwt)
-      window.location.replace('/')
+      if(this.active === true) {
+        this.isNickname = false
+        window.location.replace('/')
+      } else {
+        localStorage.removeItem('x-access-token', this.jwt)
+        window.location.replace('/')
+      }
     }
   }
 }

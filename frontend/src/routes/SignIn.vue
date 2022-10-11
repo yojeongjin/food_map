@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
+import axios from 'axios'
 
 export default {
   data() {
@@ -49,13 +49,12 @@ export default {
         active: this.active
       })
       .then((res) => {
-        
         if(res.data.success) {
+          console.log(res.data.active)
           const jwt = res.data.result.jwt;
           localStorage.setItem('x-access-token', jwt)
           alert(res.data.msg)
           window.location.replace('/')
-
         } else {
           alert(res.data.msg)
         }

@@ -25,6 +25,7 @@ exports.add = (req,res) => {
     if(rows.length === 0) {
       return res.send({
 				success: false,
+        active: active,
 				code: 400,
 				msg:'회원정보가 존재하지 않습니다.'
 			})
@@ -38,6 +39,7 @@ exports.add = (req,res) => {
       )
       return res.send({
         result: { jwt: token },
+        active: active,
         success: true,
         code: 200,
         msg:'로그인 성공'

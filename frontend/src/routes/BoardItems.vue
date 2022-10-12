@@ -30,7 +30,7 @@
 
 export default {
   mounted() {
-    axios.get('http://localhost:3000/api/board/'+this.$route.params.items, {params: {
+    axios.get('http://3.36.188.55/api/board/'+this.$route.params.items, {params: {
       items: this.$route.params.items
     }})
     .then((res) => {

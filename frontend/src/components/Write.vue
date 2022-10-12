@@ -45,7 +45,7 @@ export default {
   mounted() {
     const jwt = localStorage.getItem('x-access-token')
 
-    axios.get('http://localhost:3000/api/signin', {
+    axios.get('http://3.36.188.55/api/signin', {
       headers: { 'x-access-token': jwt }
     })
     .then((res) => {
@@ -101,7 +101,7 @@ export default {
 				return;
 			}
 
-      axios.post('http://localhost:3000/api/board', form, {
+      axios.post('http://3.36.188.55/api/board', form, {
         header: { 'Content-Type': 'multipart/form-data' }
       }).then((res) => {
         if(res.data.success) {

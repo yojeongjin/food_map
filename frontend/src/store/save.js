@@ -18,21 +18,21 @@ export default {
   },
   actions: {
     async getSave({commit}) {
-      const res = await axios.get('http://localhost:3000/api/find')
+      const res = await axios.get('http://http://3.36.188.55/api/find')
       const { data } = res.data
       commit('updateState', {
         saveDatas: data
       })
     },
     async getNewly({commit}) {
-      const res = await axios.get('http://localhost:3000/api/newly')
+      const res = await axios.get('http://3.36.188.55/api/newly')
       const { data } = res.data
       commit('updateState', {
         newlyDatas: data
       })
     },
     async getList({commit}) {
-      const res = await axios.get('http://localhost:3000/api/board')
+      const res = await axios.get('http://3.36.188.55/api/board')
       const data = res.data.data
 
       commit('updateState', {
@@ -40,7 +40,7 @@ export default {
       })
     },
     async getMenu({commit}) {
-      const res = await axios.get('http://localhost:3000/api/menu')
+      const res = await axios.get('http://3.36.188.55/api/menu')
       const data = res.data.data
 
       let randomData = data.sort(() => Math.random() - 0.5)

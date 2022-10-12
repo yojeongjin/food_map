@@ -4,5 +4,5 @@ node_modules
 bin
 .env
 
-db.js
-jwtMiddleware.js
+/config.db.js
+/config.jwtMiddleware.js

@@ -98,6 +98,7 @@ export default {
         width: 50%;
         height: 70%;
         .sign-input {
+          
         width: 60%;
         height: 10%;
         border: 1px solid #ccc;

@@ -28,8 +28,11 @@ router.get("/",dao.list);
 router.get("/:items",dao.view);
 router.post("/", upload.single('image'), dao.add);
 
+router.delete("/", dao.delete);
+router.patch("/", dao.update);
+
 router.all('*',(req, res)=> {
-	res.status(404).send({success:false, msg:'board unknown uri ${req.path}'});
+	res.status(404).send({data:req, success:false, msg:'board unknown uri ${req.path}'});
 })
 
 module.exports = router;

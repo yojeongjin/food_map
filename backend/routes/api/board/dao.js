@@ -31,3 +31,35 @@ exports.add = (req,res) => {
 		res.send({success:true});
 	})
 }
+
+exports.delete = (req,res) => {
+	body = req.query;
+
+	sql = "DELETE FROM Board WHERE boardIdx = ? ";
+	conn.query(sql,[body.boardIdx],(err,result) => {
+		if(err) throw err;
+
+		res.send({
+			success: true,
+			code: 200,
+			msg:'삭제되었습니다!'
+		})
+	})
+}
+
+exports.update = (req,res) => {
+	body = req.body;
+
+	sql = 
+	"update mydb_food.Board set boardTitle = ?, boardLocation = ?, boardContent = ? where boardIdx = ? ";
+
+	conn.query(sql,[body.boardTitle, body.boardLocation, body.boardContent, body.boardIdx],(err,result) => {
+		if(err) throw err;
+
+		res.send({
+			success: true,
+			code: 200,
+			msg:'수정되었습니다!'
+		})
+	})
+}

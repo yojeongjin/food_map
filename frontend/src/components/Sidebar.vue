@@ -81,7 +81,7 @@
       clickPlaceSave(e) {
         let index = e.target.dataset.code
 
-        axios.post('http://3.36.188.55/api/find', {
+        axios.post('http://localhost:3000/api/find', {
           resName : this.datas[index].place_name,
           resAdd : this.datas[index].address_name,
           resUrl: this.datas[index].place_url
@@ -104,7 +104,7 @@
       removeSave(e) {
         let index = e.target.dataset.code
 
-        axios.delete('http://3.36.188.55/api/find', {params: {
+        axios.delete('http://localhost:3000/api/find', {params: {
           resIdx: this.saveDatas[index].resIdx
         }})
         .then((res) => {

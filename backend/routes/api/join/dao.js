@@ -5,7 +5,6 @@ require('dotenv').config();
 
 exports.list = (req,res) => {
   const { userId } = req.query;
-  console.log(req.query)
 
   sql = "select * from Users where userId = ? ";
 	conn.query(sql, [userId],(err,rows) => { //쿼리 실행

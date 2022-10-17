@@ -50,10 +50,11 @@ exports.delete = (req,res) => {
 exports.update = (req,res) => {
 	body = req.body;
 
+	console.log(req.body)
 	sql = 
 	"update mydb_food.Board set boardTitle = ?, boardLocation = ?, boardContent = ? where boardIdx = ? ";
 
-	conn.query(sql,[body.boardTitle, body.boardLocation, body.boardContent, body.boardIdx],(err,result) => {
+	conn.query(sql,[body.boardTitle, body.boardLocation, body.boardContent, body.boardIdx],(err,row) => {
 		if(err) throw err;
 
 		res.send({

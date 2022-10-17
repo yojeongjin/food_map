@@ -12,7 +12,7 @@
             <input v-model="boardTitle" />
           </div>
           <div class="content"> WRITER
-            <input v-model="boardWriter" />
+            <span>{{ this.boardWriter }}</span>
           </div>
           <div class="content"> LOCATION
             <input v-model="boardLocation" />
@@ -45,7 +45,7 @@ export default {
   mounted() {
     const jwt = localStorage.getItem('x-access-token')
 
-    axios.get('http://3.36.188.55/api/signin', {
+    axios.get('http://localhost:3000/api/signin', {
       headers: { 'x-access-token': jwt }
     })
     .then((res) => {
@@ -101,7 +101,7 @@ export default {
 				return;
 			}
 
-      axios.post('http://3.36.188.55/api/board', form, {
+      axios.post('http://localhost:3000/api/board', form, {
         header: { 'Content-Type': 'multipart/form-data' }
       }).then((res) => {
         if(res.data.success) {
@@ -163,6 +163,12 @@ export default {
               height: 30px;
               border: none;
               margin-left: 20px;
+            }
+            span {
+              margin-left: 15px;
+              color: #555;
+              font-size: 13px;
+              font-weight: 400;
             }
           }
           .textarea {

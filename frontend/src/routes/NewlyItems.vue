@@ -47,7 +47,7 @@ export default {
     }
   },
   mounted() {
-    axios.get('http://3.36.188.55/api/newly/'+this.$route.params.idx, {params: {
+    axios.get('http://localhost:3000/api/newly/'+this.$route.params.idx, {params: {
       idx: this.$route.params.idx
     }})
     .then((res) => {

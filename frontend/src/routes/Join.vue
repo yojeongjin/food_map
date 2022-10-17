@@ -66,7 +66,7 @@
           alert('아이디를 입력해 주세요.')
           return
         }
-        axios.get('http://3.36.188.55/api/join', {params: {userId: this.userId }})
+        axios.get('http://localhost:3000/api/join', {params: {userId: this.userId }})
         .then((res) => {
           if(res.data.success) {
             alert('사용 가능한 아이디입니다.')
@@ -84,7 +84,7 @@
           alert('아이디 중복확인을 해주세요')
           return
         }
-        axios.post('http://3.36.188.55/api/join', {
+        axios.post('http://localhost:3000/api/join', {
           userId: this.userId,
           password: this.password,
           repassword: this.repassword,
@@ -111,6 +111,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    &::before {
+      content: '';
+      display: block;
+      background-image: url('../assets/joinbg.png');
+      background-repeat: no-repeat;
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 700px;
+    }
     .inner {
       width: 80%;
       height: 700px;
@@ -118,6 +128,7 @@
       justify-content: center;
       align-items: center;
       .join {
+        z-index: 100;
         display: flex;
         flex-direction: column;
         justify-content: center;

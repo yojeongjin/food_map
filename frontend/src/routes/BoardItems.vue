@@ -78,17 +78,7 @@ export default {
     }
   },
   mounted() {
-    axios.get('http://3.36.188.55/api/board/'+this.$route.params.items, {params: {
-      items: this.$route.params.items
-    }})
-    .then((res) => {
-      console.log(res)
-      this.boardDatas = res.data.data
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-
+    this.getPost()
     this.getNickname()
   },
   computed: {
@@ -103,10 +93,22 @@ export default {
     }
   },
   methods: {
+    getPost() {
+      axios.get('http://localhost:3000/api/board/'+this.$route.params.items, {params: {
+        items: this.$route.params.items
+      }})
+      .then((res) => {
+        console.log(res)
+        this.boardDatas = res.data.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
     getNickname() {
       const jwt = localStorage.getItem('x-access-token')
 
-      axios.get('http://3.36.188.55/api/signin', {
+      axios.get('http://localhost:3000/api/signin', {
         headers: { 'x-access-token': jwt }
       })
       .then((res) => {
@@ -127,7 +129,7 @@ export default {
     getDelete() {
       //다시 구현
       if(this.nickname === this.boardDatas[0].boardWriter) {
-        axios.delete('http://3.36.188.55/api/board', {params: {
+        axios.delete('http://localhost:3000/api/board', {params: {
           boardIdx: this.$route.params.items,
         }})
         .then((res) => {
@@ -140,14 +142,13 @@ export default {
       } else {
         alert('본인이 작성한 글만 삭제 할 수 있어요!')
       }
-      console.log(this.$route.params.items)
     },
     getUpdate() {
-      axios.patch('http://3.36.188.55/api/board', {
-        boardIdx: this.boardIdx,
-        boardTitle: this.modifyTitle,
-        boardLocation: this.modifyLocation,
-        boardContent: this.modifyContent
+      axios.patch('http://localhost:3000/api/board', {
+        boardIdx: this.boardDatas[0].boardIdx,
+        boardTitle: this.modifyDatas.modifyTitle,
+        boardLocation: this.modifyDatas.modifyLocation,
+        boardContent: this.modifyDatas.modifyContent
       }).then((res) => {
         if(res.data.success) {
 					alert('수정되었습니다.')
@@ -157,6 +158,8 @@ export default {
 				}
         console.log(res)
       }) .catch (err => console.log(err))
+
+      console.log(this.boardDatas[0].boardIdx)
     }
   }
 }
@@ -211,12 +214,12 @@ export default {
         width: 90%;
         padding-top: 5px;
         margin-bottom: 10px;
-
       }
       .items-story {
         width: 90%;
         margin: 0 0 15px 0;
         line-height: 1.4;
+        margin-left: 10px;
       }
       h3 {
         margin:0 6px 0 6px;

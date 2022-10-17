@@ -40,7 +40,7 @@ exports.add = (req,res) => {
     return res.send({
       success: false,
       code: 400,
-      message: '아이디는 6자리 이상이어야 합니다.'
+      message: '아이디는 6자리 이상 영문+숫자(혼합)만 사용 가능합니다.'
     })
   }
 
@@ -48,7 +48,7 @@ exports.add = (req,res) => {
     return res.send({
       success: false,
       code: 400,
-      message: '비밀번호를 확인해주세요'
+      message: '비밀번호는 8자리 이상 영문+숫자(혼합)만 사용 가능합니다.'
     })
   }
 
@@ -57,7 +57,7 @@ exports.add = (req,res) => {
     return res.send({
       success: false,
       code: 400,
-      message: '닉네임을 확인해주세요'
+      message: '닉네임은 2자리 이상 10자리 이하여야 합니다.'
     })
   }
 

@@ -134,7 +134,7 @@ export default {
         }})
         .then((res) => {
           alert(res.data.msg)
-          window.location.reload()
+          window.location.replace('/')
         })
         .catch((err) => {
           console.log(err)

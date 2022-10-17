@@ -66,7 +66,7 @@
           alert('아이디를 입력해 주세요.')
           return
         }
-        axios.get('http://localhost:3000/api/join', {params: {userId: this.userId }})
+        axios.get('http://15.164.56.29:3000/api/join', {params: {userId: this.userId }})
         .then((res) => {
           if(res.data.success) {
             alert('사용 가능한 아이디입니다.')
@@ -84,7 +84,7 @@
           alert('아이디 중복확인을 해주세요')
           return
         }
-        axios.post('http://localhost:3000/api/join', {
+        axios.post('http://15.164.56.29:3000/api/join', {
           userId: this.userId,
           password: this.password,
           repassword: this.repassword,

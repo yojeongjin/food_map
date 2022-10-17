@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     getPost() {
-      axios.get('http://localhost:3000/api/board/'+this.$route.params.items, {params: {
+      axios.get('http://15.164.56.29:3000/api/board/'+this.$route.params.items, {params: {
         items: this.$route.params.items
       }})
       .then((res) => {
@@ -108,7 +108,7 @@ export default {
     getNickname() {
       const jwt = localStorage.getItem('x-access-token')
 
-      axios.get('http://localhost:3000/api/signin', {
+      axios.get('http://15.164.56.29:3000/api/signin', {
         headers: { 'x-access-token': jwt }
       })
       .then((res) => {
@@ -129,7 +129,7 @@ export default {
     getDelete() {
       //다시 구현
       if(this.nickname === this.boardDatas[0].boardWriter) {
-        axios.delete('http://localhost:3000/api/board', {params: {
+        axios.delete('http://15.164.56.29:3000/api/board', {params: {
           boardIdx: this.$route.params.items,
         }})
         .then((res) => {
@@ -144,7 +144,7 @@ export default {
       }
     },
     getUpdate() {
-      axios.patch('http://localhost:3000/api/board', {
+      axios.patch('http://15.164.56.29:3000/api/board', {
         boardIdx: this.boardDatas[0].boardIdx,
         boardTitle: this.modifyDatas.modifyTitle,
         boardLocation: this.modifyDatas.modifyLocation,

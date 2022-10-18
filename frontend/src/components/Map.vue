@@ -37,7 +37,7 @@ import Loader from './Loader.vue'
                     /* global kakao */
                     script.onload = () => kakao.maps.load(this.initMap);
                     script.src =
-                        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=915cffed372954b7b44804ed422b9cf0&libraries=services,clusterer,drawing";
+                        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=46941455d312ab0ca03444dd520c40b9&libraries=services,clusterer,drawing";
                     document.head.appendChild(script);
                 }
             });

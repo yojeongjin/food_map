@@ -23,6 +23,7 @@ exports.add = (req,res) => {
 	url = req.file.location
 	body = req.body;
 
+	console.log(url)
 	sql = " insert into Board (boardUrl, boardTitle, boardWriter, boardLocation, boardContent) values (?, ?, ?, ?, ?) ";
 	conn.query(sql,
 		[url, body.boardTitle, body.boardWriter, body.boardLocation, body.boardContent],(err,result)=>{

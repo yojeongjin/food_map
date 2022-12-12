@@ -49,7 +49,7 @@ export default {
   mounted() {
     const jwt = localStorage.getItem('x-access-token')
 
-    axios.get('http://15.164.56.29:3000/api/signin', {
+    axios.get('https://www.searcheat.shop/api/signin', {
       headers: { 'x-access-token': jwt }
     })
     .then((res) => {

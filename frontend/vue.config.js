@@ -11,7 +11,7 @@ module.exports = defineConfig({
   devServer: { 
     proxy: { 
       '/api': { 
-        target: 'http://15.164.56.29:3000/api',
+        target: 'https://www.searcheat.shop/api',
         changeOrigin: true, 
         pathRewrite: { 
           '^/api': ''

@@ -69,12 +69,13 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-    margin-top: 150px;
+    margin: 150px 0;
     .inner {
-      margin-left: 600px;
+      margin-left: 550px;
       height: 800px;
       display: flex;
       flex-wrap: wrap;
+      overflow: hidden;
       .post-list {
         width: 250px;
         height: calc(250px * 3 / 2);

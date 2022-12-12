@@ -88,7 +88,7 @@ export default {
     align-items: center;
     z-index: 999;
     .inner {
-      width: 80%;
+      width: 1300px;
       height: 100%;
       margin: 0 auto;
       position: relative;

@@ -120,7 +120,7 @@ export default {
 
 <style lang="scss" scoped>
   .container {
-    margin-top: 150px;
+    margin: 150px 0;
     .inner {
       width: 500px;
       height: 900px;

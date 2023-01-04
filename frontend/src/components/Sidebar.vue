@@ -127,7 +127,8 @@
       },
       removeSave(e) {
         let resIdx = e.target.dataCode
-        
+        console.log(resIdx)
+        console.log(typeof resIdx)
         axios.delete('https://www.searcheat.shop/api/find', {params: {
           resIdx: resIdx
         }})

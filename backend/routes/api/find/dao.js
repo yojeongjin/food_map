@@ -17,7 +17,7 @@ exports.add = (req,res) => {
 	conn.query(sql,[body.resName, body.resAdd, body.resUrl, body.userIdx],(err,rows)=>{
 		if(err) throw err;
 		try {
-			sql = "insert into Restraunts (resName, resAdd, resUrl, userIdx) values (?, ?, ?)";
+			sql = "insert into Restraunts (resName, resAdd, resUrl, userIdx) values (?, ?, ?, ?)";
 			conn.query(sql,[body.resName, body.resAdd, body.resUrl, body.userIdx ],(err,rows)=>{
 				if(err) throw err;
 				res.send({success:true});

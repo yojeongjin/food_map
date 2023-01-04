@@ -31,7 +31,7 @@
               <li class="saveData-name"> {{ saveData.resName }} </li>
               <li class="saveData-add"> {{ saveData.resAdd }} </li>
               <a class="saveData-url" :href="saveData.resUrl">자세히 보기: {{ saveData.resUrl }}</a>
-              <img :dataCode="saveData.resIdx" src="../assets/bin.png" class="saveData-img" @click="removeSave" />
+              <img :data-code="saveData.resIdx" src="../assets/bin.png" class="saveData-img" @click="removeSave" />
             </ul>
           </template>
         </div>
@@ -126,9 +126,11 @@
         this.isSave = true
       },
       removeSave(e) {
-        let resIdx = e.target.dataCode
+        let resIdx = e.target.dataset.code
+        console.log(e.target.dataCode)
+        console.log(e.target)
         console.log(resIdx)
-        console.log(typeof resIdx)
+
         axios.delete('https://www.searcheat.shop/api/find', {params: {
           resIdx: resIdx
         }})

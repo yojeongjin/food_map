@@ -132,17 +132,17 @@
         console.log(resIdx)
         console.log(e.tartget.dataCode)
 
-        axios.delete('https://www.searcheat.shop/api/find', {params: {
-          resIdx: resIdx
-        }})
-        .then((res) => {
-          alert('삭제되었습니다.')
-          console.log(res,'삭제완료')
-          window.location.reload()
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+        // axios.delete('https://www.searcheat.shop/api/find', {params: {
+        //   resIdx: resIdx
+        // }})
+        // .then((res) => {
+        //   alert('삭제되었습니다.')
+        //   console.log(res,'삭제완료')
+        //   window.location.reload()
+        // })
+        // .catch((err) => {
+        //   console.log(err)
+        // })
       }
     },
     computed: {

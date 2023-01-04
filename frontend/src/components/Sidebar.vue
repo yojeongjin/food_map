@@ -27,13 +27,11 @@
             </form>
           </ul>
           <template v-if="isSave">
-            <ul v-for="saveData in saveDatas" :key="saveData.id" class="saveData-info">
+            <ul v-for="saveData in saveDatas" :key="saveData.resIdx" class="saveData-info">
               <li class="saveData-name"> {{ saveData.resName }} </li>
               <li class="saveData-add"> {{ saveData.resAdd }} </li>
               <a class="saveData-url" :href="saveData.resUrl">자세히 보기: {{ saveData.resUrl }}</a>
-              <form @click="removeSave">
-                <img :data-code="saveData.id" src="../assets/bin.png" class="saveData-img" />
-              </form>
+              <img :data-code="saveData.resIdx" src="../assets/bin.png" class="saveData-img" @click="removeSave" />
             </ul>
           </template>
         </div>
@@ -130,6 +128,9 @@
       removeSave(e) {
         let index = e.target.dataset.code
         let resIdx = this.saveDatas[index].resIdx
+        console.log(this.saveDatas[index])
+        console.log(resIdx)
+        console.log(e.tartget.dataCode)
 
         axios.delete('https://www.searcheat.shop/api/find', {params: {
           resIdx: resIdx

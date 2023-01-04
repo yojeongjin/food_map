@@ -91,7 +91,7 @@
           nickname: this.nickname
         })
         .then((res) => {
-          alert(res.data.message)
+          alert(res.data.msg)
 
           const jwt = res.data.result.jwt;
           localStorage.setItem('x-access-token', jwt)

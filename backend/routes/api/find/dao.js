@@ -11,12 +11,12 @@ exports.list = (req,res) => { //리스트 모듈 router 에서 호출
 exports.add = (req,res) => {
  	body = req.body; //전송된 데이터를 받는다.
 	console.log(body)
-	sql = "select resAdd, resName,resUrl from Restraunts where resAdd = ? and resName = ? and resUrl =? " ;
-	conn.query(sql,[body.resName, body.resAdd, body.resUrl],(err,rows)=>{
+	sql = "select resAdd, resName,resUrl,userIdx from Restraunts where resAdd = ? and resName = ? and resUrl = ? and userIdx = ? " ;
+	conn.query(sql,[body.resName, body.resAdd, body.resUrl, body.userIdx],(err,rows)=>{
 		if(err) throw err;
 		try {
-			sql = "insert into Restraunts (resName, resAdd, resUrl) values (?, ?, ?)";
-			conn.query(sql,[body.resName, body.resAdd, body.resUrl ],(err,rows)=>{
+			sql = "insert into Restraunts (resName, resAdd, resUrl, userIdx) values (?, ?, ?)";
+			conn.query(sql,[body.resName, body.resAdd, body.resUrl, body.userIdx ],(err,rows)=>{
 				if(err) throw err;
 				res.send({success:true});
 			})

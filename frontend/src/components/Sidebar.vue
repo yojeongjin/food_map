@@ -126,11 +126,8 @@
         this.isSave = true
       },
       removeSave(e) {
-        let index = e.target.dataset.code
-        let resIdx = this.saveDatas[index].resIdx
-        console.log(this.saveDatas[index])
-        console.log(resIdx)
-        console.log(e.tartget.dataCode)
+        console.log(e.target.dataCode)
+        console.log(e.target)
 
         // axios.delete('https://www.searcheat.shop/api/find', {params: {
         //   resIdx: resIdx

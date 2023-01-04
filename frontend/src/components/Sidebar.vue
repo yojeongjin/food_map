@@ -54,8 +54,24 @@
         isShow: true,
         keyword: "",
         filters: ['한식','중식','일식','양식','카페'],
+        userIdx: '',
+        saveDatas: []
       }
     },
+    mounted() {
+    const jwt = localStorage.getItem('x-access-token')
+
+    axios.get('https://www.searcheat.shop/api/signin', {
+      headers: { 'x-access-token': jwt }
+    })
+    .then((res) => {
+      if(res.data.code === 200) {
+        this.userIdx = res.data.result.userIdx
+      } else {
+        return
+      }
+    })
+  },
     methods: {
       saveInfo(e) {
         e.target.parentNode.children[0].style.transform = `rotateY(${180}deg)`
@@ -84,7 +100,8 @@
         axios.post('https://www.searcheat.shop/api/find', {
           resName : this.datas[index].place_name,
           resAdd : this.datas[index].address_name,
-          resUrl: this.datas[index].place_url
+          resUrl: this.datas[index].place_url,
+          userIdx: this.userIdx
         })
         .then((res) => {
           console.log(res,'완료')
@@ -97,7 +114,16 @@
         })
       },
       getSaveDatas() {
-        this.$store.dispatch('save/getSave')
+        axios.get('https://www.searcheat.shop/api/find', {params: {
+          userIdx: this.userIdx
+        }})
+        .then((res) => {
+        console.log(res)
+        this.saveDatas = res.data.data
+        })
+        .catch((err) => {
+          console.log(err)
+        })
         this.$store.dispatch('place/searchPlaces', {keyword: ''})
         this.isSave = true
       },
@@ -136,17 +162,6 @@
           return {
             id: index,
             name: filter
-          }
-        })
-      },
-      saveDatas() {
-        return this.$store.state.save.saveDatas.map((saveData, index) => {
-          return {
-            id: index,
-            resIdx: saveData.resIdx,
-            resName: saveData.resName,
-            resAdd: saveData.resAdd,
-            resUrl: saveData.resUrl
           }
         })
       }

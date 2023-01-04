@@ -36,7 +36,7 @@ exports.add = (req,res) => {
 exports.delete = (req,res) => {
 	body = req.query;
 
-	sql = "DELETE FROM Restraunts WHERE resIdx = ? ";
+	sql = "delete from mydb_food.Restraunts where resIdx = ? ";
 	conn.query(sql,[body.resIdx],(err,result) => {
 		if(err) throw err;
 

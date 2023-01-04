@@ -129,11 +129,13 @@
       },
       removeSave(e) {
         let index = e.target.dataset.code
+        let resIdx = this.saveDatas[index].resIdx
 
         axios.delete('https://www.searcheat.shop/api/find', {params: {
-          resIdx: this.saveDatas[index].resIdx
+          resIdx: resIdx
         }})
         .then((res) => {
+          alert('삭제되었습니다.')
           console.log(res,'삭제완료')
           window.location.reload()
         })

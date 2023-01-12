@@ -22,8 +22,7 @@
         </div>
 
         <div class="img-wrap">
-          <canvas id="target-canvas"></canvas>
-          <img class="modi-img" />
+          <img class="modi-img" ref="targetImg" />
         </div>
 
       </div>
@@ -37,6 +36,7 @@
 export default {
   data(){
     return  {
+      vueCanvas: null,
       vueCtx: null,
       imgUrl: null,
       isStart: false,
@@ -56,8 +56,9 @@ export default {
     }
   },
   mounted() {
-    var vueCanvas = document.getElementById('canvas')
-    var ctx = vueCanvas.getContext('2d')
+    let c = document.getElementById('canvas')
+    let ctx = c.getContext('2d')
+    this.vueCanvas = c
     this.vueCtx = ctx
   },
   methods: {
@@ -67,44 +68,47 @@ export default {
       this.msg= '' 
       this.modiMsg= ''
     },
-    drawStart(e) {
-      this.isStart = true
-
+    drawEvent() {
       const cX = this.$refs.canvas.getBoundingClientRect().left
       const cY = this.$refs.canvas.getBoundingClientRect().top
-      this.canvasX = cX
-      this.canvasY = cY
-      
 
-      this.startX = parseInt(e.clientX - this.canvasX , 10)
-      this.startY = parseInt(e.clientY - this.canvasY , 10)
-    },
-    draw(e) {
-      if(!this.isStart) {
-        return
-      }
-      this.endX = parseInt(e.clientX - this.canvasX , 10)
-      this.endY = parseInt(e.clientY - this.canvasY , 10)
+      this.vueCanvas.addEventListener('mousedown', (e) => {
+        this.isStart = true
 
-      this.vueCtx.clearRect(0, 0, 400, 450)
-      this.vueCtx.strokeRect(this.startX, this.startY, this.endX - this.startX, this.endY - this.startY)
-    },
-    drawEnd() {
-      this.isStart = false
+        this.canvasX = cX
+        this.canvasY = cY
 
-      if( 
-        Math.abs(this.endX - this.startX) < this.minSize || 
-        Math.abs(this.endY - this.startY) < this.minSize) {
-        return
-      }
-      this.drawOut(this.startX, this.startY, this.endX - this.startX, this.endY - this.startY)
+        this.startX = parseInt(e.clientX - this.canvasX , 10)
+        this.startY = parseInt(e.clientY - this.canvasY , 10)
+      })
+      this.vueCanvas.addEventListener('mousemove', (e) => {
+        if(!this.isStart) {
+          return
+        }
+        this.endX = parseInt(e.clientX - this.canvasX , 10)
+        this.endY = parseInt(e.clientY - this.canvasY , 10)
+
+        this.vueCtx.clearRect(0, 0, this.$refs.canvas.width, this.$refs.canvas.height)
+        this.vueCtx.strokeRect(this.startX, this.startY, this.endX - this.startX, this.endY - this.startY)
+      })
+      this.vueCanvas.addEventListener('mouseup',() => {
+        this.isStart = false
+
+        if( 
+          Math.abs(this.endX - this.startX) < this.minSize || 
+          Math.abs(this.endY - this.startY) < this.minSize) {
+          return
+        }
+        this.drawOut(this.startX, this.startY, this.endX - this.startX, this.endY - this.startY)
+      })
     },
     drawOut(x, y, width, height) {
-      console.log('로드됨')
-      
+      if (!this.imgUrl){
+        return
+      }
+
       let imgWrap = document.querySelector('.img-wrap')
-      let modiImg = document.querySelector('.modi-img')
-      let targetCanvas = document.getElementById('target-canvas')
+      let targetCanvas = document.createElement('canvas')
       let targetCtx = targetCanvas.getContext('2d')
 
       imgWrap.innerHTML = ''
@@ -120,8 +124,9 @@ export default {
       targetCanvas.width = this.targetWidth
       targetCanvas.height = this.targetHeight
 
-      modiImg.addEventListener('load', () => {
-        const buffer = modiImg.width / this.$refs.canvas.width
+      this.$refs.targetImg.addEventListener('load', () => {
+        console.log(this.$refs.targetImg)
+        const buffer = this.$refs.targetImg.width / this.$refs.canvas.width
 
         this.sourceX = x * buffer
         this.sourceY = y * buffer
@@ -129,7 +134,7 @@ export default {
         this.sourceHeight = height * buffer
 
         targetCtx.drawImage(
-          modiImg,
+          this.$refs.targetImg,
           this.sourceX,
           this.sourceY,
           this.sourceWidth,
@@ -140,9 +145,14 @@ export default {
           this.targetHeight
         )
       })
-      modiImg.src = this.imgUrl
+      this.$refs.targetImg.src = this.imgUrl
       imgWrap.appendChild(targetCanvas)
     }
+  },
+  updated() {
+    this.$nextTick(function () {
+      this.drawEvent()
+    })
   }
 }
 </script>

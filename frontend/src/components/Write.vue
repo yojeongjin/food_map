@@ -2,11 +2,12 @@
   <div class="container">
     <div class="inner">
       <form>
-        <div class="tbPhoto">
+        <div class="tbPhoto" @click="isEditor=true">
           {{ msg }}
-          <input type="file" accept="image/*" ref="image" @change="onChangeFiles" class="tbPhoto-input" />
-          <img v-if="boardUrl" :src="boardUrl" class="tbPhoto-preview" />
+          <!-- <input type="file" accept="image/*" ref="image" @change="onChangeFiles" class="tbPhoto-input" />
+          <img v-if="boardUrl" :src="boardUrl" class="tbPhoto-preview" /> -->
         </div>
+        <ImgEditor v-if="isEditor" @close="isEditor=false" class="imgEditor" />
         <div class="tbWrite">
           <div class="content"> TITLE
             <input v-model="boardTitle" />
@@ -30,8 +31,10 @@
 
 <script>
 import axios from 'axios'
+import ImgEditor from './ImgEditor.vue'
 
 export default {
+  components: { ImgEditor },
   data() {
     return {
       boardUrl: null,
@@ -39,7 +42,8 @@ export default {
       boardWriter: '',
       boardLocation: '',
       boardContent: '',
-      msg: '📸 사진을 업로드 해주세요.'
+      msg: '📸 사진을 업로드 해주세요.',
+      isEditor: false
     }
   },
   mounted() {
@@ -59,8 +63,8 @@ export default {
   methods: {
     onChangeFiles(e) {
       const file = e.target.files[0]
-      this.boardUrl = URL.createObjectURL(file);
-      this.msg= '';
+      this.boardUrl = URL.createObjectURL(file)
+      this.msg= ''
     },
 
     regPost() {
@@ -128,14 +132,18 @@ export default {
       form {
         border-top: 2px solid black;
         border-bottom: 2px solid black;
+        .imgEditor {
+            margin: 0 0;
+          }
         .tbPhoto {
+          position: relative;
           border: 1px dashed #c8c8c8;
           margin: 5px;
           height: 250px;
           display: flex;
           justify-content: center;
           align-items: center;
-          position: relative;
+          cursor: pointer;
           .tbPhoto-input {
             position: absolute;
             right: 0;

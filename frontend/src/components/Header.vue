@@ -11,14 +11,14 @@
             회원가입
           </RouterLink>
         </div>
-        <did v-else class="nickname">
-          <did class="nickname-words">
+        <div v-else class="nickname">
+          <div class="nickname-words">
             안녕하세요, {{this.nickname}} 님!
-          </did>
+          </div>
           <div @click="getSignOut" class="logout">
             로그아웃
           </div>
-        </did>
+        </div>
       </div>
       <div class="nav-menu">
         <RouterLink to="/board" class="nav-item">

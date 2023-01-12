@@ -2,7 +2,7 @@
   <div class="container">
     <div class="editor-section">
       <div class="editor-header">
-        <button class="btn" @click="$emit('close')"> X </button>
+        <button class="btn" @click="$emit('close')"> x </button>
       </div>
 
       <div class="editor-body">
@@ -15,14 +15,15 @@
           </div>
 
           <div class="canvas-wrap">
-            <canvas id="canvas"></canvas>
+            <canvas id="canvas" @mousedown="drawStart" @mousemove="draw" @mouseup="drawEnd" ref="canvas"></canvas>
             <img :src="imgUrl" class="file-img" />
           </div>
 
         </div>
 
         <div class="img-wrap">
-
+          <canvas id="target-canvas"></canvas>
+          <img class="modi-img" />
         </div>
 
       </div>
@@ -32,22 +33,32 @@
 </template>
 
 <script>
+
 export default {
   data(){
     return  {
+      vueCtx: null,
       imgUrl: null,
       isStart: false,
+      minSize: 20,
       startX: null,
       startY: null,
       endX: null,
       endY: null,
-      canvas: null
+      canvasX: null,
+      canvasY: null,
+      sourceX: 0,
+      sourceY: 0,
+      sourceWidth: 0,
+      sourceHeight: 0,
+      targetHeight: 0,
+      targetWidth: 0,
     }
   },
   mounted() {
-    let c = document.getElementById("canvas")
-    let ctx = c.getContext("2d")
-    this.vueCanvas = ctx
+    var vueCanvas = document.getElementById('canvas')
+    var ctx = vueCanvas.getContext('2d')
+    this.vueCtx = ctx
   },
   methods: {
     onChangeFiles(e) {
@@ -57,13 +68,81 @@ export default {
       this.modiMsg= ''
     },
     drawStart(e) {
-      // const canvasX = this.$refs.canvas.getBoundingClientRect().left
-      // const canvasY = this.$refs.canvas.getBoundingClientRect().top
-      // this.startX = parseInt(e.clinetX - canvasX, 10)
-      // this.startY = parseInt(e.clinetY - canvasY, 10)
-      console.log(e)
-    }
+      this.isStart = true
 
+      const cX = this.$refs.canvas.getBoundingClientRect().left
+      const cY = this.$refs.canvas.getBoundingClientRect().top
+      this.canvasX = cX
+      this.canvasY = cY
+      
+
+      this.startX = parseInt(e.clientX - this.canvasX , 10)
+      this.startY = parseInt(e.clientY - this.canvasY , 10)
+    },
+    draw(e) {
+      if(!this.isStart) {
+        return
+      }
+      this.endX = parseInt(e.clientX - this.canvasX , 10)
+      this.endY = parseInt(e.clientY - this.canvasY , 10)
+
+      this.vueCtx.clearRect(0, 0, 400, 450)
+      this.vueCtx.strokeRect(this.startX, this.startY, this.endX - this.startX, this.endY - this.startY)
+    },
+    drawEnd() {
+      this.isStart = false
+
+      if( 
+        Math.abs(this.endX - this.startX) < this.minSize || 
+        Math.abs(this.endY - this.startY) < this.minSize) {
+        return
+      }
+      this.drawOut(this.startX, this.startY, this.endX - this.startX, this.endY - this.startY)
+    },
+    drawOut(x, y, width, height) {
+      console.log('로드됨')
+      
+      let imgWrap = document.querySelector('.img-wrap')
+      let modiImg = document.querySelector('.modi-img')
+      let targetCanvas = document.getElementById('target-canvas')
+      let targetCtx = targetCanvas.getContext('2d')
+
+      imgWrap.innerHTML = ''
+
+      if(Math.abs(width) <= Math.abs(height)) {
+        this.targetHeight = 450
+        this.targetWidth = (this.targetHeight * width) / height
+      } else {
+        this.targetWidth = 400
+        this.targetHeight = (this.targetWidth * height) / width
+      }
+
+      targetCanvas.width = this.targetWidth
+      targetCanvas.height = this.targetHeight
+
+      modiImg.addEventListener('load', () => {
+        const buffer = modiImg.width / this.$refs.canvas.width
+
+        this.sourceX = x * buffer
+        this.sourceY = y * buffer
+        this.sourceWidth = width * buffer
+        this.sourceHeight = height * buffer
+
+        targetCtx.drawImage(
+          modiImg,
+          this.sourceX,
+          this.sourceY,
+          this.sourceWidth,
+          this.sourceHeight,
+          0,
+          0,
+          this.targetWidth,
+          this.targetHeight
+        )
+      })
+      modiImg.src = this.imgUrl
+      imgWrap.appendChild(targetCanvas)
+    }
   }
 }
 </script>
@@ -74,6 +153,12 @@ export default {
   position: absolute;
   width: 100%;
   height: 90%;
+}
+#target-canvas {
+  border: 1px solid orange;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 .container {
   position: fixed;
@@ -152,6 +237,9 @@ export default {
         width: 400px;
         height: 500px;
         margin: 0 20px;
+        .modi-img{
+          border: 1px solid black;
+        }
       }
     }
   }
